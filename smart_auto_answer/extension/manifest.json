@@ -1,0 +1,82 @@
+{
+  "manifest_version": 3,
+  "name": "Smart Auto Answer",
+  "version": "1.0.0",
+  "description": "تشخیص خودکار تماس‌های ورودی در وب و پاسخ‌دادن خودکار به آن‌ها (واتساپ، تلگرام، گوگل‌میت، تیمز و سایت‌های دیگر).",
+  "minimum_chrome_version": "102",
+  "permissions": [
+    "storage",
+    "tabs",
+    "scripting",
+    "notifications",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://web.whatsapp.com/*",
+    "https://web.telegram.org/*",
+    "https://meet.google.com/*",
+    "https://teams.microsoft.com/*",
+    "https://teams.live.com/*",
+    "http://localhost/*",
+    "http://127.0.0.1/*"
+  ],
+  "optional_host_permissions": [
+    "*://*/*"
+  ],
+  "background": {
+    "service_worker": "background/service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Smart Auto Answer",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "assets/icons/icon16.png",
+      "48": "assets/icons/icon48.png",
+      "128": "assets/icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://web.whatsapp.com/*",
+        "https://web.telegram.org/*",
+        "https://meet.google.com/*",
+        "https://teams.microsoft.com/*",
+        "https://teams.live.com/*",
+        "http://localhost/*",
+        "http://127.0.0.1/*"
+      ],
+      "js": [
+        "content/shared.js",
+        "content/call-detector.js",
+        "content/answer-engine.js",
+        "adapters/registry.js",
+        "adapters/whatsapp-adapter.js",
+        "adapters/telegram-adapter.js",
+        "adapters/meet-adapter.js",
+        "adapters/teams-adapter.js",
+        "adapters/generic-adapter.js",
+        "content/dom-observer.js",
+        "content/content.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

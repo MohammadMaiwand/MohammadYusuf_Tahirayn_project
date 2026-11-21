@@ -1,0 +1,28 @@
+# SMART AUTO ANSWER — وابستگی‌های برنامه
+# نصب:  python -m pip install -r requirements.txt
+
+# --- رابط کاربری ---
+PySide6>=6.6.0
+
+# --- پردازش تصویر و عدد ---
+numpy>=1.26.0
+opencv-python-headless>=4.9.0
+
+# --- گرفتن تصویر از صفحه (سریع و سبک) ---
+mss>=9.0.0
+
+# --- موتور متن‌خوان (OCR) داخلی ویندوز (بدون نصب برنامهٔ جانبی) ---
+winrt-runtime>=2.0.0
+winrt-Windows.Foundation>=2.0.0
+winrt-Windows.Foundation.Collections>=2.0.0
+winrt-Windows.Globalization>=2.0.0
+winrt-Windows.Graphics.Imaging>=2.0.0
+winrt-Windows.Media.Ocr>=2.0.0
+winrt-Windows.Security.Cryptography>=2.0.0
+winrt-Windows.Storage.Streams>=2.0.0
+
+# --- ساخت آیکون (فقط برای ابزار ساخت؛ اجرای برنامه به آن نیازی ندارد) ---
+Pillow>=10.0.0
+
+# --- بسته‌بندی فایل اجرایی ---
+pyinstaller>=6.0.0

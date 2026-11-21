@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>آزمون تشخیص — Smart Auto Answer</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --panel: #16233c;
+      --panel-alt: #1d2c48;
+      --border: #2b3d5f;
+      --text: #e6edf7;
+      --muted: #9fb0cc;
+      --green: #22c55e;
+      --red: #ef4444;
+      --blue: #3b82f6;
+      --orange: #f59e0b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 20px;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Vazirmatn", "Segoe UI", Tahoma, sans-serif;
+      font-size: 12px;
+      line-height: 1.9;
+    }
+    h1 { font-size: 14px; margin: 0 0 4px; }
+    h2 { font-size: 14px; margin: 0 0 10px; }
+    .wrap { max-width: 980px; margin: 0 auto; display: grid; gap: 14px; }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .muted { color: var(--muted); }
+    .row { display: flex; flex-wrap: wrap; gap: 8px; }
+    button {
+      font-family: inherit;
+      font-size: 12px;
+      padding: 9px 14px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: var(--panel-alt);
+      color: var(--text);
+      cursor: pointer;
+      min-height: 34px;
+    }
+    button:hover { border-color: var(--blue); }
+    button.primary { background: #1e3a8a; border-color: #2563eb; }
+    button.warn { background: #78350f; border-color: var(--orange); }
+
+    /* --- ناحیهٔ تماس --- */
+    #callArea { min-height: 210px; display: flex; align-items: center; justify-content: center; }
+    .empty { color: var(--muted); }
+    .call-dialog {
+      width: 320px;
+      background: var(--panel-alt);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px;
+      text-align: center;
+    }
+    .call-name { font-size: 14px; margin-bottom: 4px; }
+    .call-sub { color: var(--muted); margin-bottom: 16px; }
+    .call-actions { display: flex; justify-content: center; gap: 14px; }
+    .circle {
+      width: 56px; height: 56px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: #fff; border: none;
+    }
+    .circle.accept { background: var(--green); }
+    .circle.decline { background: var(--red); }
+    .active-controls { display: flex; justify-content: center; gap: 14px; margin-top: 12px; }
+    .pill { background: #0b3d2a; color: #6ee7a8; border-radius: 999px; padding: 4px 12px; display: inline-block; }
+
+    /* --- گزارش --- */
+    .log { max-height: 230px; overflow: auto; font-family: Consolas, monospace; font-size: 12px; }
+    .log-item { border-bottom: 1px dashed var(--border); padding: 5px 0; }
+    .tag { border-radius: 6px; padding: 1px 6px; margin-inline-end: 6px; }
+    .tag.auto { background: #1e3a8a; color: #bfdbfe; }
+    .tag.user { background: #14532d; color: #bbf7d0; }
+    .tag.detect { background: #78350f; color: #fed7aa; }
+    .ok { color: var(--green); }
+    .bad { color: var(--red); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>صفحهٔ آزمون افزونهٔ Smart Auto Answer</h1>
+      <p class="muted">
+        این صفحه یک «تماس ورودی» جعلی می‌سازد تا بدون نیاز به تماس واقعی، درستی کار افزونه را بسنجید.
+        ابتدا افزونه را در مرورگر بارگذاری کنید، سپس یکی از دکمه‌های زیر را بزنید.
+        اگر پاسخ خودکار روشن باشد، افزونه باید خودش دکمهٔ سبز «پاسخ» را بزند.
+      </p>
+      <p class="muted">
+        نکته: برای بازکردن این فایل به‌صورت مستقیم (<code>file://</code>)، در صفحهٔ
+        <code>chrome://extensions</code> گزینهٔ «Allow access to file URLs» را برای افزونه روشن کنید.
+        یا این پوشه را با یک سرور محلی اجرا کنید.
+      </p>
+      <div class="row">
+        <button class="primary" data-sim="voice">شبیه‌سازی تماس صوتی ورودی</button>
+        <button class="primary" data-sim="video">شبیه‌سازی تماس تصویری ورودی</button>
+        <button data-sim="persian">شبیه‌سازی با برچسب فارسی (پاسخ / رد)</button>
+        <button data-sim="negative">شبیه‌سازی برچسب منفی (No answer)</button>
+        <button data-sim="active">شبیه‌سازی تماس از قبل فعال</button>
+        <button class="warn" data-sim="clear">پاک‌کردن</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>ناحیهٔ تماس</h2>
+      <div id="callArea"><span class="empty">تماسی شبیه‌سازی نشده است.</span></div>
+    </div>
+
+    <div class="card">
+      <h2>گزارش رویدادها</h2>
+      <div class="muted">ردیف‌های آبی = کلیک انجام‌شده توسط افزونه (خودکار) — ردیف‌های سبز = کلیک دستی شما.</div>
+      <div class="log" id="log"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+      var area = document.getElementById("callArea");
+      var logEl = document.getElementById("log");
+
+      function nowText() {
+        return new Date().toTimeString().slice(0, 8);
+      }
+
+      function addLog(kind, text) {
+        var row = document.createElement("div");
+        row.className = "log-item";
+        var tag = document.createElement("span");
+        tag.className = "tag " + (kind === "auto" ? "auto" : kind === "user" ? "user" : "detect");
+        tag.textContent = kind === "auto" ? "افزونه" : kind === "user" ? "کاربر" : "سیستم";
+        row.appendChild(tag);
+        row.appendChild(document.createTextNode(nowText() + " — " + text));
+        logEl.insertBefore(row, logEl.firstChild);
+      }
+
+      function report(side) {
+        // اگر روی سرور محلی اجرا می‌شویم، نتیجه را برای آزمون خودکار گزارش کن
+        if (location.protocol === "http:" || location.protocol === "https:") {
+          try {
+            fetch("/report?clicked=" + encodeURIComponent(side) + "&trusted=" +
+              (window.__lastTrusted ? "1" : "0"), { method: "GET" }).catch(function () {});
+          } catch (err) { /* بی‌صدا */ }
+        }
+      }
+
+      function buildCall(options) {
+        var box = document.createElement("div");
+        box.className = "call-dialog";
+        box.setAttribute("data-testid", "call");
+        box.setAttribute("role", "dialog");
+        box.setAttribute("aria-modal", "true");
+
+        var title = document.createElement("div");
+        title.className = "call-name";
+        title.textContent = options.name;
+        var sub = document.createElement("div");
+        sub.className = "call-sub";
+        sub.textContent = options.subtitle;
+        box.appendChild(title);
+        box.appendChild(sub);
+
+        var actions = document.createElement("div");
+        actions.className = "call-actions";
+
+        var accept = document.createElement("button");
+        accept.className = "circle accept";
+        accept.setAttribute("aria-label", options.acceptLabel);
+        accept.setAttribute("data-testid", options.acceptTestId || "call-accept");
+        accept.setAttribute("title", options.acceptLabel);
+        accept.textContent = "✓";
+
+        var decline = document.createElement("button");
+        decline.className = "circle decline";
+        decline.setAttribute("aria-label", options.declineLabel);
+        decline.setAttribute("data-testid", "call-reject");
+        decline.setAttribute("title", options.declineLabel);
+        decline.textContent = "✕";
+
+        function onClick(side, label, handler) {
+          return function (event) {
+            window.__lastTrusted = event.isTrusted;
+            addLog(event.isTrusted ? "user" : "auto",
+              "کلیک روی دکمهٔ «" + label + "» (" + side + ")");
+            handler();
+            report(side);
+          };
+        }
+
+        accept.addEventListener("click", onClick("accept", options.acceptLabel, function () {
+          box.innerHTML = "";
+          var done = document.createElement("div");
+          done.innerHTML = '<div class="pill">تماس پذیرفته شد</div>';
+          var controls = document.createElement("div");
+          controls.className = "active-controls";
+          ["Mute", "End call"].forEach(function (name) {
+            var b = document.createElement("button");
+            b.className = "circle";
+            b.style.background = name === "End call" ? "var(--red)" : "#334155";
+            b.setAttribute("aria-label", name);
+            b.setAttribute("data-testid", "active-" + name.toLowerCase().replace(/\s+/g, "-"));
+            b.textContent = name === "End call" ? "✕" : "🎤";
+            controls.appendChild(b);
+          });
+          box.appendChild(done);
+          box.appendChild(controls);
+        }));
+
+        decline.addEventListener("click", onClick("decline", options.declineLabel, function () {
+          area.innerHTML = '<span class="empty bad">تماس رد شد.</span>';
+        }));
+
+        actions.appendChild(accept);
+        actions.appendChild(decline);
+        box.appendChild(actions);
+        return box;
+      }
+
+      var SCENARIOS = {
+        voice: {
+          name: "تماس صوتی ورودی", subtitle: "شبیه‌سازی واتساپ وب",
+          acceptLabel: "Accept", declineLabel: "Decline"
+        },
+        video: {
+          name: "تماس تصویری ورودی", subtitle: "شبیه‌سازی واتساپ وب",
+          acceptLabel: "Accept video call", declineLabel: "Decline"
+        },
+        persian: {
+          name: "تماس ورودی (فارسی)", subtitle: "برچسب‌های محلی‌شده",
+          acceptLabel: "پاسخ", declineLabel: "رد"
+        },
+        negative: {
+          name: "برچسب منفی", subtitle: "افزونه نباید «No answer» را بزند",
+          acceptLabel: "Answer", declineLabel: "No answer"
+        },
+        active: {
+          name: "تماس از قبل فعال", subtitle: "افزونه نباید دوباره کلیک کند",
+          acceptLabel: "Accept", declineLabel: "Decline", alreadyActive: true
+        }
+      };
+
+      function simulate(kind) {
+        var config = SCENARIOS[kind];
+        if (!config) return;
+        area.innerHTML = "";
+        area.appendChild(buildCall(config));
+        if (config.alreadyActive) {
+          var box = area.querySelector(".call-dialog");
+          var controls = document.createElement("div");
+          controls.className = "active-controls";
+          ["Mute", "End call"].forEach(function (name) {
+            var b = document.createElement("button");
+            b.className = "circle";
+            b.setAttribute("aria-label", name);
+            b.textContent = name === "End call" ? "✕" : "🎤";
+            controls.appendChild(b);
+          });
+          box.appendChild(controls);
+        }
+        addLog("detect", "تماس «" + config.name + "» شبیه‌سازی شد.");
+      }
+
+      document.querySelectorAll("[data-sim]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var kind = btn.getAttribute("data-sim");
+          if (kind === "clear") {
+            area.innerHTML = '<span class="empty">تماسی شبیه‌سازی نشده است.</span>';
+            addLog("detect", "ناحیهٔ تماس پاک شد.");
+            return;
+          }
+          simulate(kind);
+        });
+      });
+
+      function reportLoad() {
+        if (location.protocol === "http:" || location.protocol === "https:") {
+          try { fetch("/report?loaded=1").catch(function () {}); } catch (err) { /* بی‌صدا */ }
+        }
+      }
+      reportLoad();
+
+      // بررسی تزریق افزونه: کنتنت‌اسکریپت یک ویژگی روی <html> می‌گذارد که در همین DOM دیده می‌شود
+      function reportInjection() {
+        if (document.documentElement.getAttribute("data-saa-extension")) {
+          if (location.protocol === "http:" || location.protocol === "https:") {
+            try { fetch("/report?injected=1").catch(function () {}); } catch (err) { /* بی‌صدا */ }
+          }
+          addLog("detect", "افزونه تزریق شد (کنتنت‌اسکریپت فعال است).");
+          return true;
+        }
+        return false;
+      }
+      if (!reportInjection()) {
+        var injectTimer = setInterval(function () {
+          if (reportInjection()) clearInterval(injectTimer);
+        }, 500);
+        setTimeout(function () { clearInterval(injectTimer); }, 20000);
+      }
+
+      // گزارش تغییر وضعیت موتور افزونه (برای عیب‌یابی آزمون خودکار)
+      var lastState = null;
+      function pushState() {
+        var state = document.documentElement.getAttribute("data-saa-state");
+        if (!state || state === lastState) return;
+        lastState = state;
+        addLog("detect", "وضعیت افزونه: " + state);
+        if (location.protocol === "http:" || location.protocol === "https:") {
+          try { fetch("/report?state=" + encodeURIComponent(state)).catch(function () {}); } catch (err) { /* بی‌صدا */ }
+        }
+      }
+      new MutationObserver(pushState).observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ["data-saa-state"]
+      });
+      pushState();
+
+      // حالت آزمون خودکار: با آدرس ?auto=voice تماس به‌طور خودکار شبیه‌سازی می‌شود
+      var autoParam = new URLSearchParams(location.search).get("auto");
+      if (autoParam) {
+        setTimeout(function () { simulate(autoParam); }, 1500);
+      }
+
+      addLog("detect", "صفحه آماده است. منتظر بارگذاری افزونه…");
+    })();
+  </script>
+</body>
+</html>

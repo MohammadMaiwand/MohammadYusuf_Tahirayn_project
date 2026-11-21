@@ -1,0 +1,12 @@
+{
+  "name": "smart-auto-answer-extension-tests",
+  "version": "1.0.0",
+  "private": true,
+  "description": "آزمون خودکار موتور تشخیص افزونهٔ Smart Auto Answer (فقط برای توسعه)",
+  "scripts": {
+    "test": "node extension_detector.test.cjs"
+  },
+  "devDependencies": {
+    "jsdom": "^26.0.0"
+  }
+}

@@ -42,6 +42,10 @@ const ignored = new Set([
   '.local',
   'Acount',
   '__pycache__',
+  '.tmp_jsdom',
+  'work',
+  'logs',
+  'exports',
 ]);
 const lines = [];
 function tree(directory, depth = 0) {
@@ -52,6 +56,8 @@ function tree(directory, depth = 0) {
   )) {
     if (
       ignored.has(entry.name) ||
+      entry.name.endsWith('.log') ||
+      entry.name === 'build_log.txt' ||
       (entry.name.startsWith('.env') && entry.name !== '.env.example')
     )
       continue;
