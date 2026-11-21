@@ -9,3 +9,4 @@ Fresh setup and optional local identity fixture: [installation](docs/INSTALLATIO
 Authentication architecture and current limitations: [AUTHENTICATION.md](docs/AUTHENTICATION.md). Initial owner-authorized local login details are in the private ignored Acount/LOGIN_DETAILS.txt; do not publish those files.
 
 # MohammadYusuf_Tahirayn_project
+# Cuto_Click_Project
