@@ -1,0 +1,61 @@
+# Dependency inventory
+
+Generated from workspace manifests and package-lock.json. The lockfile pins the complete transitive dependency graph. Runtime libraries support the implementation described in SYSTEM_MASTER.md, including Argon2id password hashing for implemented cookie-session authentication and authorized account management.
+
+| Workspace | Package               | Requested | Locked version | Kind            |
+| --------- | --------------------- | --------- | -------------- | --------------- |
+| root      | @eslint/js            | ^10.0.1   | 10.0.1         | devDependencies |
+| root      | @playwright/test      | 1.65.0    | 1.65.0         | devDependencies |
+| root      | concurrently          | ^9.2.1    | 9.2.5          | devDependencies |
+| root      | eslint                | ^10.14.0  | 10.14.0        | devDependencies |
+| root      | fake-indexeddb        | 6.2.8     | 6.2.8          | devDependencies |
+| root      | globals               | ^16.4.0   | 16.5.0         | devDependencies |
+| root      | prettier              | ^3.6.2    | 3.10.1         | devDependencies |
+| root      | typescript            | ~5.9.3    | 5.9.3          | devDependencies |
+| root      | typescript-eslint     | ^8.72.2   | 8.72.2         | devDependencies |
+| root      | vitest                | ^5.1.0    | 5.1.0          | devDependencies |
+| shared    | zod                   | ^4.1.12   | 4.6.7          | dependencies    |
+| backend   | @myt/shared           | 0.1.0     | 0.1.0          | dependencies    |
+| backend   | argon2                | ^0.44.0   | 0.44.0         | dependencies    |
+| backend   | cors                  | ^2.8.5    | 2.8.6          | dependencies    |
+| backend   | dotenv                | ^17.2.3   | 17.4.2         | dependencies    |
+| backend   | express               | ^5.1.0    | 5.3.0          | dependencies    |
+| backend   | express-rate-limit    | ^8.1.0    | 8.7.4          | dependencies    |
+| backend   | helmet                | ^8.1.0    | 8.3.0          | dependencies    |
+| backend   | jose                  | ^6.1.0    | 6.2.17         | dependencies    |
+| backend   | mongoose              | ^8.19.0   | 8.24.9         | dependencies    |
+| backend   | pino                  | ^10.1.0   | 10.4.0         | dependencies    |
+| backend   | pino-http             | ^11.0.0   | 11.0.0         | dependencies    |
+| backend   | sharp                 | 0.35.5    | 0.35.5         | dependencies    |
+| backend   | zod                   | ^4.1.12   | 4.6.7          | dependencies    |
+| backend   | @types/cors           | ^2.8.19   | 2.8.19         | devDependencies |
+| backend   | @types/express        | ^5.0.3    | 5.0.6          | devDependencies |
+| backend   | @types/node           | ^24.10.0  | 24.19.2        | devDependencies |
+| backend   | @types/supertest      | ^6.0.3    | 6.0.3          | devDependencies |
+| backend   | supertest             | ^7.1.4    | 7.3.2          | devDependencies |
+| backend   | tsx                   | ^4.20.6   | 4.23.15        | devDependencies |
+| frontend  | @myt/shared           | 0.1.0     | 0.1.0          | dependencies    |
+| frontend  | react                 | ^19.2.0   | 19.3.1         | dependencies    |
+| frontend  | react-dom             | ^19.2.0   | 19.3.1         | dependencies    |
+| frontend  | react-router          | ^7.9.5    | 7.18.5         | dependencies    |
+| frontend  | zustand               | ^5.0.8    | 5.1.0          | dependencies    |
+| frontend  | @tanstack/react-query | ^5.90.6   | 5.107.1        | dependencies    |
+| frontend  | react-hook-form       | ^7.65.0   | 7.92.0         | dependencies    |
+| frontend  | @hookform/resolvers   | ^5.2.2    | 5.9.2          | dependencies    |
+| frontend  | zod                   | ^4.1.12   | 4.6.7          | dependencies    |
+| frontend  | i18next               | ^25.6.0   | 25.10.10       | dependencies    |
+| frontend  | react-i18next         | ^16.2.0   | 16.6.6         | dependencies    |
+| frontend  | date-fns              | ^4.1.0    | 4.4.0          | dependencies    |
+| frontend  | lucide-react          | ^0.548.0  | 0.548.0        | dependencies    |
+| frontend  | recharts              | ^3.3.0    | 3.10.1         | dependencies    |
+| frontend  | dexie                 | ^4.2.1    | 4.4.7          | dependencies    |
+| frontend  | jalaali-js            | ^1.2.8    | 1.2.8          | dependencies    |
+| frontend  | vite                  | ^7.2.2    | 7.3.8          | devDependencies |
+| frontend  | @vitejs/plugin-react  | ^5.1.0    | 5.2.0          | devDependencies |
+| frontend  | tailwindcss           | ^4.1.17   | 4.3.5          | devDependencies |
+| frontend  | @tailwindcss/vite     | ^4.1.17   | 4.3.5          | devDependencies |
+| frontend  | vite-plugin-pwa       | ^2.0.0    | 2.0.0          | devDependencies |
+| frontend  | workbox-window        | ^7.4.1    | 7.4.1          | devDependencies |
+| frontend  | @types/react          | ^19.2.2   | 19.3.0         | devDependencies |
+| frontend  | @types/react-dom      | ^19.2.2   | 19.3.0         | devDependencies |
+| frontend  | @types/jalaali-js     | ^1.2.0    | 1.2.0          | devDependencies |

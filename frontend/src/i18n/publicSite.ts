@@ -1,0 +1,147 @@
+export const publicSite: Record<string, readonly [string, string, string]> = {
+  'publicSite.brand': [
+    'Mohammad Yousuf Taherian',
+    'محمد یوسف طاهریان',
+    'محمد یوسف طاهریان',
+  ],
+  'publicSite.brandSuffix': [
+    'Trading Company',
+    'شرکت تجارتی',
+    'سوداګریزه شرکت',
+  ],
+  'publicSite.logoLabel': ['Company logo', 'نشان شرکت', 'د شرکت نښان'],
+  'publicSite.navLabel': ['Main navigation', 'راهنمای اصلی', 'اصلي لارښود'],
+  'publicSite.nav.home': ['Home', 'خانه', 'کور'],
+  'publicSite.nav.about': ['About us', 'درباره ما', 'زموږ په اړه'],
+  'publicSite.nav.services': ['Services', 'خدمات', 'خدمتونه'],
+  'publicSite.nav.branches': ['Branches', 'شعبه‌ها', 'څانګې'],
+  'publicSite.nav.contact': ['Contact', 'تماس', 'اړیکه'],
+  'publicSite.heroKicker': [
+    'Sale · Rent · Reservation',
+    'فروش · کرایه · رزرو لباس',
+    'پلور · کرایه · د جامو ریزرف',
+  ],
+  'publicSite.heroTitle': ['Trading Company', 'شرکت تجارتی', 'سوداګریزه شرکت'],
+  'publicSite.heroText': [
+    'For moments worth remembering: a beautiful choice, reliable support and attention to detail from the first visit to the ceremony day.',
+    'برای لحظه‌هایی که در یاد می‌مانند؛ انتخابی زیبا، همراهی مطمئن و رسیدگی به جزئیات، از نخستین دیدار تا روز مراسم.',
+    'د هغو شېبو لپاره چې په یاد پاتې کېږي؛ ښکلی ټاکنه، باوري ملتیا او د جزئیاتو پاملرنه، د لومړي لید څخه تر مراسمې ورځې.',
+  ],
+  'publicSite.ctaBranches': [
+    'Explore our branches',
+    'آشنایی با شعبه‌ها',
+    'زموږ څانګې وپېژنئ',
+  ],
+  'publicSite.ctaServices': ['Our services', 'خدمات ما', 'زموږ خدمتونه'],
+  'publicSite.seal': [
+    'Elegance in choice, beauty in memory',
+    'ظرافت در انتخاب، زیبایی در خاطره',
+    'په ټاکنه کې ظرافت، په یاد کې ښکلا',
+  ],
+  'publicSite.adsKicker': [
+    'New arrivals and offers',
+    'تازه‌ها و پیشنهادها',
+    'نوي او وړاندیزونه',
+  ],
+  'publicSite.adsTitle': [
+    'Advertisements and announcements',
+    'تبلیغات و اطلاعیه‌ها',
+    'اعلانونه او خبرتیاوې',
+  ],
+  'publicSite.readMore': ['Learn more', 'بیشتر بدانید', 'نور معلومات'],
+  'publicSite.aboutKicker': [
+    'About the company',
+    'درباره شرکت',
+    'د شرکت په اړه',
+  ],
+  'publicSite.aboutTitle': [
+    'Four branches, one shared identity',
+    'چهار نمایندگی، یک هویت مشترک',
+    'څلور څانګې، یو ګډ هویت',
+  ],
+  'publicSite.aboutText': [
+    'Mohammad Yousuf Taherian Trading Company operates through Sham Royal, Sham Aroos, Sham Aroos VIP and the Dollar Department. Our branch teams are with you for dress selection, availability checks and reservation coordination.',
+    'شرکت تجارتی محمد یوسف طاهریان با نمایندگی‌های شام رویال، شام عروس، شام عروس وی‌آی‌پی و بخش دالر فعالیت می‌کند. برای انتخاب لباس، آگاهی از موجودیت و هماهنگی رزرو، همکاران نمایندگی‌های لباس همراه شما هستند.',
+    'د محمد یوسف طاهریان سوداګریزه شرکت د شام رویال، شام عروس، شام عروس وی‌آی‌پی او د ډالرو څانګې له لارې فعالیت کوي. د جامو د ټاکنې، شتون معلومولو او د ریزرف همغږۍ لپاره زموږ د څانګو همکاران ستاسو سره دي.',
+  ],
+  'publicSite.servicesKicker': ['Our services', 'خدمات ما', 'زموږ خدمتونه'],
+  'publicSite.servicesTitle': [
+    'Your choice, our service',
+    'انتخاب شما، خدمات ما',
+    'ستاسو ټاکنه، زموږ خدمت',
+  ],
+  'publicSite.saleTitle': ['Dress sales', 'فروش لباس', 'د جامو پلور'],
+  'publicSite.saleText': [
+    'To see the dresses available for sale, contact the branch you prefer.',
+    'برای آشنایی با لباس‌های قابل فروش، با شعبه مورد نظر تماس بگیرید.',
+    'د پلور وړ جامو د لیدو لپاره له خوښې څانګې سره اړیکه ونیسئ.',
+  ],
+  'publicSite.rentTitle': ['Dress rental', 'کرایه لباس', 'د جامو کرایه'],
+  'publicSite.rentText': [
+    'Coordinate the rental terms and dates with the branch supervisor.',
+    'شرایط و زمان کرایه را با مسئول شعبه هماهنگ کنید.',
+    'د کرایې شرایط او وخت له څانګې مسئول سره همغږي کړئ.',
+  ],
+  'publicSite.reserveTitle': ['Dress reservation', 'رزرو لباس', 'د جامو ریزرف'],
+  'publicSite.reserveText': [
+    'Availability and the requested date are confirmed after the branch review.',
+    'موجودیت لباس و تاریخ مورد نظر پس از بررسی شعبه تأیید می‌شود.',
+    'د جامو شتون او ټاکلې نېټه د څانګې له کتنې وروسته تاییدېږي.',
+  ],
+  'publicSite.branchesKicker': [
+    'Active branches',
+    'شعبه‌های فعال',
+    'فعالې څانګې',
+  ],
+  'publicSite.branchesTitle': [
+    'Meet our branches',
+    'با شعبه‌های ما آشنا شوید',
+    'زموږ له څانګو سره وپېژنئ',
+  ],
+  'publicSite.branchServiceText': [
+    'Sale, rent and reservation of dresses',
+    'فروش، کرایه و رزرو لباس',
+    'د جامو پلور، کرایه او ریزرف',
+  ],
+  'publicSite.branchDollarText': [
+    'For service details, coordinate with the department supervisor.',
+    'برای آگاهی از خدمات، با مسئول بخش هماهنگ کنید.',
+    'د خدمتونو د معلوماتو لپاره له څانګې مسئول سره همغږي وکړئ.',
+  ],
+  'publicSite.contactDetails': [
+    'Contact details',
+    'اطلاعات تماس',
+    'د اړیکې معلومات',
+  ],
+  'publicSite.contactKicker': ['Contact us', 'ارتباط با ما', 'زموږ سره اړیکه'],
+  'publicSite.contactTitle': [
+    'Contact and address',
+    'تماس و آدرس',
+    'اړیکه او پته',
+  ],
+  'publicSite.contactPending': [
+    'Contact details will be published soon.',
+    'اطلاعات تماس به‌زودی درج می‌شود.',
+    'د اړیکې معلومات به ژر خپر شي.',
+  ],
+  'publicSite.addressPending': [
+    'Branch addresses will be published soon.',
+    'آدرس شعبه‌ها به‌زودی درج می‌شود.',
+    'د څانګو پتې به ژر خپرې شي.',
+  ],
+  'publicSite.staffTitle': [
+    'Staff sign-in',
+    'ورود کارکنان',
+    'د کارکوونکو ننوتل',
+  ],
+  'publicSite.staffText': [
+    'Sign in to your account to access the management workspace.',
+    'برای دسترسی به بخش مدیریت، وارد حساب کاربری خود شوید.',
+    'د مدیریت برخې ته د لاسرسي لپاره خپل حساب ته ننوځئ.',
+  ],
+  'publicSite.backToTop': [
+    'Back to top ↑',
+    'بازگشت به بالا ↑',
+    'بېرته پورته ↑',
+  ],
+};

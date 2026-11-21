@@ -1,0 +1,286 @@
+# راهنمای جامع پروژه مدیریت شرکت تجارتی
+
+آخرین بازبینی: 2026-11-19
+
+دامنهٔ درخواست تکمیل، طبق تأیید مالک: Master Prompt 02 و Master Prompt 03 است. بخش‌های اصلی محلی پیاده‌اند؛ تکمیل استقرار تولید، پشتیبان‌گیری/بازیابی و پذیرش چاپگر و دستگاه واقعی هنوز تأیید نشده‌اند. فهرست جاری در ابتدای `docs/TASK_TRACKER.md` ثبت شده است.
+
+این سند مرجع فارسی ساختار و رفتار پیاده‌شده در مخزن است. برای هر فایل پیاده‌سازی‌شده مسئولیت آن جداگانه توضیح داده شده؛ این سند بازنویسی سورس‌کد خط‌به‌خط نیست. صرف وجود پوشه یا فایل placeholder به معنی تکمیل قابلیت نیست. جزئیات قراردادها در مستندات `docs/` قرار دارد.
+
+اطلاعات ورود، رمزها، کلیدها، دادهٔ مشتری و محتوای خصوصی `Acount/` عمداً درج نشده‌اند. فایل‌های `.env`، `.local/`، `node_modules/`، خروجی build و دیتابیس واقعی نیز عمومی نیستند.
+
+## نمای کلی
+
+- ریشه: `D:\M_Y_U_M_S`
+- رابط: React + TypeScript + Vite؛ انگلیسی، دری و پشتو با RTL/LTR.
+- سرور: Express + TypeScript؛ API در `/api/v1`.
+- پایگاه‌داده: MongoDB/Mongoose؛ عملیات چندمجموعه‌ای به Replica Set نیاز دارد.
+- بستهٔ مشترک `@myt/shared`: شعبه‌ها، مجوزها، schemaها و پول دقیق.
+- چهار شعبهٔ فعال: Sham Royal، Sham Aroos، Sham Aroos VIP (AFN) و Dollar Department (USD).
+- Sham Shaban غیرفعال است؛ برای آن داده یا عملیات واقعی نسازید.
+- نقش‌ها: `admin`، `manager`، `employee`. مجوز و شعبه در سمت سرور دوباره بررسی می‌شود.
+- احراز هویت با نشست کوکی امن و مدیریت‌شده در MongoDB است؛ اطلاعات تحویل حساب خصوصی می‌ماند.
+- Launcher و MongoDB محلی فقط برای توسعه‌اند، نه استقرار تولید.
+
+## بازطراحی سراسری محیط کار — ۲۰۲۶-۱۱-۱۹
+
+- حالت روشن و تاریک و انتخاب منوی کناری یا افقی به ترجیح کاربر ذخیره می‌شود؛ ورود و خروج آن را پاک نمی‌کند.
+- منوها از همان مسیرها و صلاحیت‌های فعلی ساخته می‌شوند. منوی کناری گروه‌بندی باز/بسته دارد و منوی افقی با کیبورد، Escape و کلیک بیرون کنترل می‌شود؛ در موبایل کشوی کناری استفاده می‌شود.
+- جستجوی صفحه با Ctrl/Cmd K فقط صفحه‌های مجاز را نشان می‌دهد. پیش‌نمایش اطلاعیه‌ها از دادهٔ واقعی موجود است.
+- فرم‌های بلند مشتری، معامله، اجناس و حساب‌ها فضای بزرگ با عنوان ثابت دارند. پنجره از والد متحرک مستقل است، پس‌زمینه قفل می‌شود و فقط بدنهٔ فرم اسکرول دارد؛ مشکل بریدگی تصویر مالک از این مسیر اصلاح شده است.
+- کنترل‌های مشترک، حالت ذخیره، خطای کنار ورودی، پیام قابل بستن، جدول‌ها، فلترها و نمودارها از رنگ‌ها و سبک مشترک استفاده می‌کنند. فهرست مشتریان و معاملات ترتیب سمت سرور، جهت ترتیب و پاک‌کردن فلترها دارند.
+- جزئیات معماری و پوشش مسیرها: `docs/ENTERPRISE_UI.md`. نتایج واقعی آزمون در ابتدای `docs/PROJECT_STATUS.md` ثبت می‌شود؛ این تغییر API، محاسبات، صلاحیت‌ها، داده‌ها یا اندازهٔ چاپ را تغییر نمی‌دهد.
+- فایل‌های تازه: `frontend/src/styles/enterprise.css` برای رنگ‌ها و چیدمان سراسری؛ `components/common/Appearance.tsx` برای تنظیمات ظاهر؛ `components/common/ListOrder.tsx` برای ترتیب فهرست؛ `i18n/enterprise.ts` برای متن‌های دری، پشتو و انگلیسی.
+
+## جریان برنامه
+
+1. `frontend/src/main.tsx` برنامه و providerها را راه می‌اندازد.
+2. `frontend/src/app/OperationalApp.tsx` نشست، پوسته، منو، branch و مسیرهای مجاز را مدیریت می‌کند.
+3. صفحه‌های `frontend/src/features/` از `frontend/src/services/api.ts` برای API استفاده می‌کنند.
+4. `backend/src/app.ts` امنیت HTTP و routerها را می‌سازد؛ `backend/src/server.ts` دیتابیس و jobها را راه می‌اندازد.
+5. `backend/src/routes/business.ts` و `backend/src/services/` مجوز، شعبه و commandها را کنترل می‌کنند.
+6. `backend/src/modules/` عملیات کسب‌وکار را اجرا می‌کند؛ عملیات مالی از transaction، idempotency و audit استفاده می‌کند.
+7. `shared/` قراردادهای type/runtime مشترک مرورگر و سرور را فراهم می‌کند.
+
+## داشبورد و مشتری
+
+- مدیر با نمای کلی چهار شعبه وارد می‌شود؛ انتخاب کارت شعبه، داشبورد کامل همان شعبه را باز می‌کند.
+- بازگشت به Overview باید دوباره چهار کارت را نشان دهد؛ انتخاب قبلی شعبه، نمای اولیهٔ مدیر را محدود نمی‌کند.
+- منوی اصلی گروه «شعبه» و «مدیریت» دارد و هر گروه باز/بسته می‌شود. مجوزهای حساب نیز گروه‌بندی شده‌اند.
+- ثبت مشتری جدید، مشخصات مشتری و تمام ورودی‌های معاملهٔ اول را در یک فرم واحد می‌گیرد؛ دکمهٔ رفتن به مرحلهٔ دوم حذف شده و ذخیرهٔ نهایی اتمی است. شمارهٔ مشتری خودکار و مانده، مبلغ کل و روزهای باقی‌مانده محاسباتی‌اند. این فرم در تمام چهار شعبهٔ فعال مشترک است.
+- سطر مشتری به صفحهٔ حساب او می‌رود: مشخصات، مانده به تفکیک ارز، معاملات، پرداخت‌های قسطی، فاکتورها و عملیات مجاز.
+- پرداخت تازه به همان معامله ثبت می‌شود و مانده از مبلغ کل و پرداخت‌ها محاسبه می‌گردد؛ حذف پرداخت به‌جای reversal/audit انجام نمی‌شود.
+- مبلغ‌ها به عدد صحیح واحد خرد تبدیل می‌شوند؛ ارز شعبه ثابت است: Dollar برابر USD و سه شعبهٔ دیگر AFN.
+- DOCX موجود شرح متنی است و تصویر/طرح گرافیکی ندارد؛ ظاهر از design system فعلی پیروی می‌کند.
+
+## پایگاه‌داده و محدودیت‌ها
+
+- تمام عملیات تجاری باید با `branchId` محدود و در سرویس مجدداً مجازسنجی شوند.
+- تراکنش، تصویر snapshot کالا/بسته را نگه می‌دارد؛ فاکتور صادرشده snapshot تاریخی خود را حفظ می‌کند.
+- input مرورگر به فیلتر خام MongoDB تبدیل نمی‌شود؛ commandها schema، مجوز، نسخه، دستگاه و idempotency دارند.
+- schema/index جدید باید migration افزایشی بررسی‌شده داشته باشد.
+- ارسال خودکار پیام، بازپرداخت خودکار، تخصیص خودکار پول میان معاملات و ابزار backup تولیدی پیاده نیستند.
+- پذیرش چاپگر فیزیکی، زبان بومی و استقرار عمومی هنوز کار جداگانه‌اند.
+
+## راهنمای جداگانهٔ فایل‌ها
+
+### ریشه و ابزارها
+
+- `AGENTS.md`: ارجاع به دستورهای کاری مخزن.
+- `AGENT_INSTRUCTIONS.md`: قواعد ایمنی، مستندسازی و بررسی تغییرات.
+- `SYSTEM_MASTER.md`: مرجع معماری کلان و تصمیم‌های اصلی.
+- `README.md`: معرفی و شروع کار.
+- `Project_info`: همین راهنمای فارسی.
+- `package.json`: workspaceها و فرمان‌های کلی ساخت، تست و بررسی.
+- `package-lock.json`: نسخه‌های دقیق نصب و وابستگی‌های انتقالی.
+- `tsconfig.base.json`: تنظیم مشترک TypeScript.
+- `eslint.config.mjs`: قواعد lint.
+- `vitest.config.ts`: تنظیم تست Vitest.
+- `playwright.config.ts`: تست مرورگر عملیات.
+- `playwright.auth.config.ts`: تست مرورگر احراز هویت.
+- `.editorconfig`: هماهنگی تنظیم و newline فایل‌ها.
+- `.prettierrc.json`: تنظیم قالب‌بندی.
+- `.prettierignore`: استثناهای Prettier.
+- `.gitignore`: فایل‌های خارج از نسخه‌بندی.
+- `.npmrc`: رفتار npm/workspaces.
+- `.env.example`: نمونهٔ متغیر محیطی بدون secret واقعی.
+- `.github/workflows/ci.yml`: مراحل CI.
+
+### بستهٔ `shared/`
+
+- `shared/package.json`: تنظیم بسته و فرمان build.
+- `shared/tsconfig.json`: تنظیم کامپایل مشترک.
+- `shared/index.ts`: نقطهٔ export بسته.
+- `shared/constants/branches.ts`: شناسه/وضعیت شعبه و ارز.
+- `shared/constants/permissions.ts`: مجوزها، نقش‌ها و دسترسی مؤثر.
+- `shared/schemas/business.ts`: قراردادهای runtime با Zod.
+- `shared/utils/money.ts`: parse و محاسبهٔ پول دقیق در واحد خرد.
+- فایل‌های `.gitkeep` در `shared/schemas/`, `shared/types/`, `shared/utils/`: نگهدارندهٔ پوشه، بدون منطق اجرایی.
+
+### سرور `backend/`
+
+- `backend/package.json`: وابستگی‌ها و فرمان‌های سرور.
+- `backend/tsconfig.json`: تنظیم کامپایل سرور.
+- `backend/.env.example`: الگوی متغیرهای سرور.
+- `backend/src/app.ts`: ساخت Express، middleware امنیتی، rate limit و routerها.
+- `backend/src/server.ts`: اتصال MongoDB، bootstrap، اعلان‌ها و چرخهٔ عمر HTTP.
+- `backend/src/config/env.ts`: اعتبارسنجی تنظیمات محیطی.
+- `backend/src/database/models.ts`: مدل‌ها، schemaها و indexهای MongoDB.
+- `backend/src/database/bootstrap.ts`: آماده‌سازی اولیهٔ دیتابیس و تنظیمات پایه.
+- `backend/src/database/branchSchema.ts`: تعریف schema پایهٔ شعبه.
+- `backend/src/database/authMigration.ts`: migration حساب/نشست و indexهای auth.
+- `backend/src/database/clothingMigration.ts`: migration داده/ساختار پوشاک.
+- `backend/src/database/expensesMigration.ts`: migration افزایشی هزینه.
+- `backend/src/database/operationsMigration.ts`: migration شعبهٔ Dollar و عملیات تکمیلی.
+- `backend/src/jobs/notifications.ts`: reconciliation اعلان‌های تحویل.
+- `backend/src/routes/business.ts`: APIهای کسب‌وکار و محدودهٔ branch.
+- `backend/src/security/identity.ts`: resolve هویت و مجوزهای فعلی.
+- `backend/src/security/branchScope.ts`: بررسی عضویت شعبه.
+- `backend/src/security/token.ts`: ابزار بررسی token/هویت.
+- `backend/src/services/context.ts`: context درخواست معتبر برای سرویس‌ها.
+- `backend/src/services/commands.ts`: dispatch تغییرات، مجوز، تراکنش و idempotency.
+- `backend/src/services/queries.ts`: queryهای مجاز و branch-scoped.
+- `backend/src/utils/errors.ts`: خطاهای استاندارد HTTP.
+- `backend/src/validators/query.ts`: اعتبارسنجی پارامترهای query.
+- `backend/src/modules/auth/core.ts`: password، CAPTCHA، cookie و lifecycle نشست.
+- `backend/src/modules/auth/models.ts`: مدل حساب، نشست، CAPTCHA و audit امنیتی.
+- `backend/src/modules/auth/routes.ts`: endpointهای auth و مدیریت حساب/نشست.
+- `backend/src/modules/catalog/service.ts`: منطق کالا، دسته، ضمانت و بسته.
+- `backend/src/modules/catalog/availability.ts`: موجودی و تعارض رزرو.
+- `backend/src/modules/catalog/photos.ts`: مدیریت عکس کالا.
+- `backend/src/modules/transactions/service.ts`: منطق ایجاد، اصلاح و خواندن معامله.
+- `backend/src/modules/payments/service.ts`: پرداخت، قسط و reversal.
+- `backend/src/modules/invoices/service.ts`: snapshot و صدور فاکتور.
+- `backend/src/modules/expenses/service.ts`: هزینه‌های شعبه.
+- `backend/src/modules/reports/service.ts`: گزارش‌های branch-scoped و تجمیع مجاز.
+- `backend/src/modules/sync/service.ts`: replay آفلاین و بررسی تعارض.
+- فایل‌های `backend/src/modules/*/.gitkeep`: placeholder پوشه‌های آینده، نه ماژول پیاده‌شده.
+- `backend/tests/auth.test.ts`: آزمون login، نقش و نشست.
+- `backend/tests/business.test.ts`: آزمون business و جداسازی شعبه.
+- `backend/tests/foundation.test.ts`: آزمون‌های HTTP و زیرساخت.
+- `backend/tests/token.test.ts`: آزمون اعتبارسنجی token.
+
+### رابط کاربری `frontend/`
+
+- `frontend/package.json`: وابستگی‌ها و فرمان‌های frontend.
+- `frontend/tsconfig.json`: تنظیم TypeScript frontend.
+- `frontend/vite.config.ts`: Vite، React، Tailwind و PWA.
+- `frontend/index.html`: HTML پایه و mount برنامه.
+- `frontend/.env.example`: نمونهٔ تنظیمات build-time؛ secret سروری در آن قرار نگیرد.
+- `frontend/src/main.tsx`: mount React و provider/styleهای اصلی.
+- `frontend/src/app/App.tsx`: wrapper/root UI.
+- `frontend/src/app/OperationalApp.tsx`: shell نشست‌دار، branch، sidebar و routeها.
+- `frontend/src/services/api.ts`: API client، identity، branch و permissions محلی.
+- `frontend/src/lib/env.ts`: اعتبارسنجی متغیرهای Vite.
+- `frontend/src/lib/queryClient.ts`: cache و رفتار query/mutation.
+- `frontend/src/stores/preferences.ts`: ترجیح‌های غیرمحرمانهٔ کاربر.
+- `frontend/src/offline/database.ts`: ساختار Dexie.
+- `frontend/src/offline/vault.ts`: ذخیرهٔ محلی رمزگذاری‌شده و scope.
+- `frontend/src/offline/operations.ts`: صف آفلاین، ارسال و تعارض.
+- `frontend/src/security/offlineLease.ts`: اعتبارسنجی lease امضاشده.
+- `frontend/src/types/business.ts`: typeهای رابط و API.
+- `frontend/src/utils/dates.ts`: تقویم/زمان و قالب تاریخ.
+- `frontend/src/components/common/ui.tsx`: کنترل‌های مشترک، modal، فرم، query و نمایش وضعیت.
+- `frontend/src/components/common/motion.ts`: کاهش حرکت و دسترس‌پذیری انیمیشن.
+- `frontend/src/components/common/ClothingPhoto.tsx`: نمایش تصویر پوشاک.
+- `frontend/src/components/forms/JalaliPicker.tsx`: انتخاب‌گر تاریخ جلالی.
+- `frontend/src/components/printing/InvoicePaper.tsx`: کاغذ و اجزای فاکتور.
+- `frontend/src/components/printing/InvoicePrintButton.tsx`: چاپ فاکتور و رسید.
+- `frontend/src/components/printing/ListPrintButton.tsx`: چاپ فهرست.
+- `frontend/src/features/auth/LoginPage.tsx`: فرم ورود و CAPTCHA.
+- `frontend/src/features/auth/AccountsPage.tsx`: حساب‌ها و مجوزهای گروه‌بندی‌شده.
+- `frontend/src/features/auth/SessionsPage.tsx`: نشست‌ها و کنترل‌های نشست.
+- `frontend/src/features/dashboard/DashboardPage.tsx`: داشبورد admin، manager و employee.
+- `frontend/src/features/dashboard/DashboardWidgets.tsx`: کارت‌ها، نمودارها و اجزای داشبورد.
+- `frontend/src/features/customers/CustomersPage.tsx`: فهرست و جست‌وجوی مشتری.
+- `frontend/src/features/customers/CustomerForm.tsx`: فرم مشخصات مشتری.
+- `frontend/src/features/customers/CustomerDetail.tsx`: حساب، مانده و تاریخچهٔ مشتری.
+- `frontend/src/features/transactions/TransactionsPage.tsx`: فهرست و فیلتر معامله.
+- `frontend/src/features/transactions/TransactionTable.tsx`: جدول معامله.
+- `frontend/src/features/transactions/TransactionForm.tsx`: فرم ایجاد معامله/کالا/پیش‌پرداخت.
+- `frontend/src/features/transactions/TransactionDetail.tsx`: جزییات، پرداخت، ویرایش و چاپ.
+- `frontend/src/features/branches/CatalogPage.tsx`: صفحهٔ انتخاب‌شدهٔ کاتالوگ.
+- `frontend/src/features/branches/SettingsPage.tsx`: تنظیمات شعبه.
+- `frontend/src/features/branches/UsersPage.tsx`: صفحهٔ کاربران در صورت استفاده از مسیر مربوط.
+- `frontend/src/features/branches/SyncPage.tsx`: مرور عملیات آفلاین و تعارض.
+- `frontend/src/features/expenses/ExpensesPage.tsx`: ثبت و فهرست هزینه.
+- `frontend/src/features/messages/BranchMessages.tsx`: پیام داخلی شعبه.
+- `frontend/src/features/messages/NotificationsPage.tsx`: فهرست اعلان و خواندن آن.
+- `frontend/src/features/reports/ReportsPage.tsx`: گزارش‌ها و خروجی.
+- `frontend/src/features/reports/AuditPage.tsx`: تاریخچهٔ audit مجاز.
+- `frontend/src/features/reports/PrintPage.tsx`: پیش‌نمایش چاپ.
+- `frontend/src/features/public/HomePage.tsx`: صفحهٔ عمومی آغاز برنامه.
+- `frontend/src/features/public/public.css`: سبک صفحهٔ عمومی.
+- `frontend/src/i18n/index.ts`: راه‌اندازی i18next و جهت صفحه.
+- `frontend/src/i18n/auth.ts`: ترجمه‌های احراز هویت.
+- `frontend/src/i18n/business.ts`: ترجمه‌های کسب‌وکار.
+- `frontend/src/i18n/clothing.ts`: ترجمه‌های پوشاک.
+- `frontend/src/i18n/common.ts`: ترجمه‌های عمومی.
+- `frontend/src/i18n/errors.ts`: پیام‌های خطای محلی.
+- `frontend/src/i18n/expenses.ts`: ترجمه‌های هزینه.
+- `frontend/src/i18n/premium.ts`: متن‌های design system/داشبورد.
+- `frontend/src/i18n/printing.ts`: ترجمه‌های چاپ.
+- `frontend/src/i18n/locales/en/translation.json`: متن انگلیسی.
+- `frontend/src/i18n/locales/fa-AF/translation.json`: متن دری.
+- `frontend/src/i18n/locales/ps-AF/translation.json`: متن پشتو.
+- `frontend/src/styles/index.css`: سبک پایه.
+- `frontend/src/styles/auth.css`: سبک ورود.
+- `frontend/src/styles/premium.css`: پوستهٔ screen و اجزای premium.
+- `frontend/src/styles/print.css`: اندازه و چیدمان مستقل چاپ.
+- `frontend/public/manifest.webmanifest`: metadata برنامهٔ PWA.
+- `frontend/public/icons/app-192.png`: آیکن PWA با ابعاد 192.
+- `frontend/public/icons/app-512.png`: آیکن PWA با ابعاد 512.
+- `frontend/tests/dates.test.ts`: آزمون تاریخ/تقویم.
+- `frontend/tests/offlineLease.test.ts`: آزمون lease آفلاین.
+- `frontend/e2e/auth.spec.ts`: سناریوهای مرورگر auth و حساب‌ها.
+- `frontend/e2e/operations.spec.ts`: سناریوهای branch، معامله، پرداخت، چاپ و آفلاین.
+- `frontend/e2e/setup.ts`: آماده‌سازی migration و fixture مرورگر.
+- `frontend/e2e/cleanup.ts`: پاک‌سازی دیتابیس موقت تست با guard.
+- فایل‌های `.gitkeep` در featureها و پوشه‌های assets فقط نگهدارندهٔ پوشه‌اند.
+
+### مستندات `docs/`
+
+- `docs/PROJECT_STATUS.md`: وضعیت و شواهد واقعی آزمون.
+- `docs/FOLDER_STRUCTURE.md`: موجودی فایل‌ها.
+- `docs/SYSTEM_ARCHITECTURE.md`: معماری سیستم و مرز ماژول‌ها.
+- `docs/SYSTEM_MASTER_DOCUMENT.md`: نسخهٔ تولیدشدهٔ سند master.
+- `docs/API_DOCUMENTATION.md`: endpointها و قرارداد API.
+- `docs/DATABASE_SCHEMA.md`: مدل‌ها، indexها و migrationها.
+- `docs/AUTHENTICATION.md`: ورود، نشست، مجوز و محدودیت‌های auth.
+- `docs/PERMISSIONS_DOCUMENTATION.md`: نقش و مجوز.
+- `docs/SECURITY_DOCUMENTATION.md`: کنترل‌های امنیتی و ریسک.
+- `docs/OFFLINE_SYNC_DOCUMENTATION.md`: cache، صف و تعارض آفلاین.
+- `docs/PRINTING_DOCUMENTATION.md`: چاپ فاکتور/رسید.
+- `docs/UI_DESIGN.md`: طراحی، داشبورد و دسترس‌پذیری.
+- `docs/OPERATIONS_COMPLETION.md`: قابلیت‌ها و محدودیت‌های عملیات جاری.
+- `docs/EXPENSES.md`: فیلد و قواعد ماژول هزینه.
+- `docs/DEPENDENCIES.md`: وابستگی‌های دقیق lockشده.
+- `docs/ENVIRONMENT.md`: متغیرهای محیطی.
+- `docs/INSTALLATION_GUIDE.md`: نصب و راه‌اندازی.
+- `docs/DEVELOPMENT_ROADMAP.md`: مسیر توسعه.
+- `docs/TASK_TRACKER.md`: کارهای تکمیل و باز.
+- `docs/DECISIONS_LOG.md`: تصمیم‌ها و علت آنها.
+- `docs/CHANGELOG.md`: تاریخچهٔ تغییر.
+- `docs/VALIDATION_REPORT.md`: نتایج بررسی و پذیرش.
+
+### Launcher و اسکریپت‌ها
+
+- `Launcher/README.md`: راهنمای اجرای محلی Windows.
+- `Launcher/START_SYSTEM.bat`: شروع سامانهٔ محلی.
+- `Launcher/STOP_SYSTEM.bat`: توقف پردازه‌های تحت مالکیت launcher.
+- `Launcher/scripts/config.mjs`: خواندن و آماده‌سازی تنظیم launcher.
+- `Launcher/scripts/system.ps1`: چرخهٔ عمر و کنترل پردازه در PowerShell.
+- `scripts/development/local-mongo.mjs`: شروع/توقف Replica Set ایزولهٔ loopback.
+- `scripts/database/migrate-clothing.mjs`: اجرای migration پوشاک.
+- `scripts/database/migrate-expenses.mjs`: اجرای migration هزینه.
+- `scripts/database/migrate-operations.mjs`: اجرای migration شعبه/عملیات.
+- `scripts/database/setup-accounts.mjs`: آماده‌سازی حساب اولیه؛ دادهٔ خروجی خصوصی است.
+- `scripts/maintenance/browser-tests.mjs`: build و اجرای تست مرورگر.
+- `scripts/maintenance/document-inventory.mjs`: تولید inventory و سند mirror.
+- `scripts/maintenance/smoke-frontend.mjs`: smoke test HTTP رابط.
+- `scripts/maintenance/verify-build.mjs`: بررسی خروجی build/PWA.
+- `scripts/maintenance/verify-foundation.mjs`: بررسی ساختار workspace.
+- `scripts/maintenance/test-launcher.ps1`: آزمون launcher در Windows.
+- فایل‌های `.gitkeep` زیر `scripts/` و `Launcher/` placeholder هستند.
+
+## فرمان‌های اصلی
+
+- نصب نسخه‌های lockشده: `npm ci`
+- ساخت همهٔ workspaceها: `npm run build`
+- بررسی نوع، lint، test، build و ساختار: `npm run check`
+- بررسی قالب: `npm run format:check`
+- آزمون مرورگر: `npm run test:e2e`
+- دیتابیس ایزولهٔ توسعه: `npm run db:dev`
+- شروع/توقف رابط و سرور محلی: `Launcher/START_SYSTEM.bat` / `Launcher/STOP_SYSTEM.bat`
+
+## وضعیت و حدود شواهد
+
+- بازبینی فعلی: `npm run check` کامل موفق شد؛ ۴۵ تست در شش فایل، بررسی نوع، lint، ساخت و کنترل خروجی PWA موفق‌اند.
+- Build هنوز هشدار غیرمسدودکنندهٔ upstream Zod و bundle بزرگ دارد.
+- `npm run format:check` موفق شد. نتیجهٔ تازهٔ آزمون مرورگر در ابتدای `docs/PROJECT_STATUS.md` ثبت می‌شود؛ شواهد قدیمی به‌عنوان سابقه حفظ شده‌اند.
+- چاپ فیزیکی، متن بومی، TLS/استقرار تولید، backup/restore تمرین‌شده، retention و بازبینی امنیت مستقل نیازمند پذیرش/کار جداگانه‌اند.
+- ارسال بیرونی خودکار پیام پیاده نیست؛ WhatsApp دستی و با بررسی کاربر است.
+- چک‌لیست یک‌جای تکمیل و نواقص در ابتدای `docs/TASK_TRACKER.md` قرار دارد. متن کامل دو پرامپت اصلی به‌شکل فایل جداگانه در مخزن موجود نیست؛ این بازبینی بر دستورهای ثبت‌شده، مستندات و سورس فعلی تکیه دارد و تأیید خط‌به‌خط متن ناموجود نیست.
+- مراجع: `docs/PROJECT_STATUS.md`، `docs/OPERATIONS_COMPLETION.md`، `docs/API_DOCUMENTATION.md`، `docs/DATABASE_SCHEMA.md` و `docs/FOLDER_STRUCTURE.md`.
+
+
+بازبینی ۲۰۲۶-۱۱-۱۹: حداقل رمز جدید عادی ۸ کاراکتر ساده است. ۹ حساب آزمایشی مالک (ادمین و مدیر/کارمند چهار شعبه) ساخته و ورود، مجوز و جداسازی شعبه‌ای آن‌ها تأیید شد. جزئیات ورود فقط در Acount/MAIHAN_PREVIEW.txt است. رمز شش‌کاراکتری آزمایشی استثنای ایجاد محلی است؛ قانون عمومی دور زده نشده است. اعتبارسنجی حساب و ورود Dollar نیز اصلاح شد.

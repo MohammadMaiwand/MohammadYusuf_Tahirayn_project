@@ -1,0 +1,30 @@
+name: Foundation checks
+on: [push, pull_request]
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26
+          cache: npm
+      - run: npm ci
+      - name: Start isolated MongoDB replica set for integration tests
+        run: |
+          docker run -d --name myt-test-mongo --network host mongo:8.0 --bind_ip 127.0.0.1 --port 27018 --replSet myt-dev
+          for attempt in $(seq 1 60); do
+            if docker exec myt-test-mongo mongosh --port 27018 --quiet --eval 'db.adminCommand({ping:1})'; then break; fi
+            sleep 1
+          done
+          docker exec myt-test-mongo mongosh --port 27018 --quiet --eval 'rs.initiate({_id:"myt-dev",members:[{_id:0,host:"127.0.0.1:27018"}]})'
+          for attempt in $(seq 1 60); do
+            if docker exec myt-test-mongo mongosh --port 27018 --quiet --eval 'if (!db.hello().isWritablePrimary) quit(1)'; then exit 0; fi
+            sleep 1
+          done
+          exit 1
+      - run: npm run check
+      - run: npm run format:check
+      - name: Stop test database
+        if: always()
+        run: docker rm -f myt-test-mongo || true

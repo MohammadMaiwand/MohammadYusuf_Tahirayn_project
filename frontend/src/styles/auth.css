@@ -1,0 +1,233 @@
+.login-page {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #f2f4ee;
+  padding: 40px;
+  gap: 40px;
+  align-items: center;
+}
+.login-story {
+  background: #153a30;
+  color: #fff;
+  border-radius: 24px;
+  padding: 64px 48px;
+  min-height: 680px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 30px;
+  box-shadow: 0 25px 80px #153a3020;
+}
+.login-story h1 {
+  font-size: clamp(32px, 4vw, 56px);
+  line-height: 1.4;
+  margin: 0;
+}
+.login-story p {
+  font-size: 20px;
+  line-height: 1.9;
+  color: #c9dbc8;
+}
+.login-brand {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: 20px;
+  line-height: 1.8;
+}
+.login-branches {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.login-branches span {
+  padding: 10px 14px;
+  border: 1px solid #628473;
+  border-radius: 30px;
+  font-size: 13px;
+}
+.login-card {
+  background: #fff;
+  border: 1px solid #e2e6dc;
+  border-radius: 24px;
+  padding: 38px;
+  max-width: 520px;
+  width: 100%;
+  justify-self: center;
+  box-shadow: 0 20px 60px #153a3009;
+}
+.login-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #1d6752;
+}
+.login-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.login-card h2 {
+  font-size: 26px;
+  margin: 20px 0;
+}
+.login-card .field {
+  gap: 7px;
+}
+.login-card input,
+.login-card select {
+  min-height: 44px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.login-card-top select {
+  width: auto;
+}
+.login-global {
+  background: #eff5ee;
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.8;
+  margin: 0;
+}
+.password-control {
+  display: flex;
+  align-items: center;
+  border: 1px solid #d7ded1;
+  border-radius: 9px;
+  overflow: hidden;
+}
+.password-control input {
+  border: 0;
+  min-width: 0;
+}
+.password-control button {
+  background: transparent;
+  border: 0;
+  padding: 12px;
+  color: #365849;
+  display: flex;
+}
+.captcha-box {
+  border: 1px solid #d7ded1;
+  border-radius: 12px;
+  padding: 12px;
+  margin: 0;
+  min-width: 0;
+}
+.captcha-box legend {
+  font-size: 13px;
+  padding: 0 6px;
+}
+.captcha-box img {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto 10px;
+}
+.captcha-question {
+  text-align: center;
+  font-size: 24px;
+  letter-spacing: 3px;
+  margin: 8px;
+}
+.captcha-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+.captcha-actions button {
+  background: transparent;
+  border: 0;
+  color: #1d6752;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 12px;
+}
+.permissions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 12px;
+  grid-column: 1/-1;
+}
+.permissions-grid details {
+  border: 1px solid #dce4d7;
+  border-radius: 10px;
+  padding: 12px;
+}
+.permissions-grid summary {
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.permissions-grid label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 10px 0;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.permissions-grid input[type='checkbox'] {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+.account-modal .modal {
+  max-width: 950px;
+}
+.session-toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.account-form-wide {
+  grid-column: 1/-1;
+}
+@media (max-width: 900px) {
+  .login-page {
+    grid-template-columns: 1fr;
+    padding: 24px;
+    gap: 20px;
+  }
+  .login-story {
+    min-height: 0;
+    padding: 24px;
+    gap: 12px;
+  }
+  .login-story h1 {
+    font-size: 28px;
+  }
+  .login-story p,
+  .login-story > svg,
+  .login-branches {
+    display: none;
+  }
+  .login-brand {
+    font-size: 15px;
+  }
+  .login-card {
+    padding: 26px;
+  }
+}
+@media (max-width: 450px) {
+  .login-page {
+    padding: 12px;
+  }
+  .login-story {
+    border-radius: 16px;
+    padding: 18px;
+  }
+  .login-card {
+    padding: 22px 18px;
+    border-radius: 16px;
+  }
+  .login-story h1 {
+    font-size: 23px;
+  }
+  .login-card-top select {
+    max-width: 110px;
+  }
+}

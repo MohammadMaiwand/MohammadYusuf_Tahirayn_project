@@ -1,0 +1,48 @@
+{
+  "name": "myt-management-system",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "shared",
+    "backend",
+    "frontend"
+  ],
+  "engines": {
+    "node": ">=24.0.0",
+    "npm": ">=11"
+  },
+  "scripts": {
+    "dev": "npm run build -w shared && concurrently -k \"npm run dev -w backend\" \"npm run dev -w frontend\"",
+    "build": "npm run build -w shared && npm run build -w backend && npm run build -w frontend",
+    "typecheck": "npm run build -w shared && npm run typecheck --workspaces --if-present",
+    "lint": "eslint .",
+    "test": "npm run build -w shared && vitest run",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "npm run typecheck && npm run lint && npm test && npm run build && npm run verify:structure && npm run verify:build",
+    "verify:structure": "node scripts/maintenance/verify-foundation.mjs",
+    "docs:inventory": "node scripts/maintenance/document-inventory.mjs",
+    "verify:build": "node scripts/maintenance/verify-build.mjs",
+    "smoke:frontend": "node scripts/maintenance/smoke-frontend.mjs",
+    "test:e2e": "node scripts/maintenance/browser-tests.mjs",
+    "test:auth:e2e": "node scripts/maintenance/browser-tests.mjs --auth",
+    "db:dev": "node scripts/development/local-mongo.mjs start",
+    "db:stop": "node scripts/development/local-mongo.mjs stop"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "1.65.0",
+    "concurrently": "^9.2.1",
+    "eslint": "^10.14.0",
+    "fake-indexeddb": "6.2.8",
+    "globals": "^16.4.0",
+    "prettier": "^3.6.2",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.72.2",
+    "vitest": "^5.1.0"
+  },
+  "overrides": {
+    "glob": "^14.0.6",
+    "minimatch": "^11.0.5"
+  }
+}

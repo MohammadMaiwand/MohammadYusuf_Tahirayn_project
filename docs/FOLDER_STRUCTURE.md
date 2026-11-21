@@ -1,0 +1,388 @@
+# Folder structure
+
+The current workspace is the project root. Dependencies, artifacts, runtime files and local secrets are omitted. This is the complete tracked-source candidate inventory.
+
+```text
+.github/
+  workflows/
+    ci.yml
+backend/
+  src/
+    config/
+      .gitkeep
+      env.ts
+    database/
+      .gitkeep
+      advertisementsMigration.ts
+      alterationsMigration.ts
+      authMigration.ts
+      bootstrap.ts
+      branchSchema.ts
+      clothingMigration.ts
+      currencyMigration.ts
+      expensesMigration.ts
+      models.ts
+      operationsMigration.ts
+    jobs/
+      .gitkeep
+      notifications.ts
+    middleware/
+      .gitkeep
+    modules/
+      advertisements/
+        model.ts
+        routes.ts
+        service.ts
+      alterations/
+        model.ts
+        scheduler.ts
+        service.ts
+      auth/
+        .gitkeep
+        core.ts
+        models.ts
+        routes.ts
+      branches/
+        .gitkeep
+      catalog/
+        availability.ts
+        photos.ts
+        service.ts
+      customers/
+        .gitkeep
+      expenses/
+        service.ts
+      guarantees/
+        .gitkeep
+      invoices/
+        service.ts
+      notifications/
+        .gitkeep
+      packages/
+        .gitkeep
+      payments/
+        .gitkeep
+        service.ts
+      products/
+        .gitkeep
+      reports/
+        .gitkeep
+        service.ts
+      sync/
+        service.ts
+      transactions/
+        .gitkeep
+        service.ts
+      users/
+        .gitkeep
+    routes/
+      .gitkeep
+      business.ts
+    security/
+      .gitkeep
+      branchScope.ts
+      identity.ts
+      notificationAudience.ts
+      token.ts
+    services/
+      .gitkeep
+      commands.ts
+      context.ts
+      queries.ts
+    types/
+      .gitkeep
+    utils/
+      .gitkeep
+      errors.ts
+    validators/
+      .gitkeep
+      query.ts
+    app.ts
+    server.ts
+  tests/
+    alterations.test.ts
+    auth.test.ts
+    business.test.ts
+    foundation.test.ts
+    token.test.ts
+  .env.example
+  package.json
+  tsconfig.json
+docs/
+  API_DOCUMENTATION.md
+  AUTHENTICATION.md
+  CHANGELOG.md
+  CLIENT_REVIEW.md
+  DATABASE_SCHEMA.md
+  DECISIONS_LOG.md
+  DEPENDENCIES.md
+  DEVELOPMENT_ROADMAP.md
+  ENTERPRISE_UI.md
+  ENVIRONMENT.md
+  EXPENSES.md
+  FOLDER_STRUCTURE.md
+  GARMENT_ALTERATIONS.md
+  INSTALLATION_GUIDE.md
+  OFFLINE_SYNC_DOCUMENTATION.md
+  OPERATIONS_COMPLETION.md
+  PERMISSIONS_DOCUMENTATION.md
+  PHASE1_FINANCIAL_IMPROVEMENTS.md
+  PRINTING_DOCUMENTATION.md
+  PROJECT_STATUS.md
+  SECURITY_DOCUMENTATION.md
+  SYSTEM_ARCHITECTURE.md
+  SYSTEM_MASTER_DOCUMENT.md
+  TASK_TRACKER.md
+  UI_DESIGN.md
+  VALIDATION_REPORT.md
+frontend/
+  e2e/
+    alterations.spec.ts
+    auth.spec.ts
+    cleanup.ts
+    operations.spec.ts
+    setup.ts
+  public/
+    fonts/
+      OFL.txt
+      Vazirmatn.ttf
+    icons/
+      .gitkeep
+      app-192.png
+      app-512.png
+    images/
+      bridal/
+        atelier.jpg
+        CREDITS.md
+        elegance.jpg
+        ivory.jpg
+      .gitkeep
+    manifest.webmanifest
+  src/
+    app/
+      .gitkeep
+      App.tsx
+      OperationalApp.tsx
+    assets/
+      .gitkeep
+    components/
+      common/
+        .gitkeep
+        Appearance.tsx
+        BridalGallery.tsx
+        ClothingPhoto.tsx
+        entry.css
+        ListOrder.tsx
+        motion.ts
+        NotificationLink.tsx
+        ui.tsx
+      forms/
+        .gitkeep
+        CurrencySelect.tsx
+        JalaliPicker.tsx
+      layout/
+        .gitkeep
+      printing/
+        .gitkeep
+        InvoicePaper.tsx
+        InvoicePrintButton.tsx
+        ListPrintButton.tsx
+      tables/
+        .gitkeep
+    features/
+      advertisements/
+        AdvertisementsPage.tsx
+      alterations/
+        AlterationDetail.tsx
+        AlterationForm.tsx
+        AlterationsPage.tsx
+        api.ts
+      auth/
+        AccountsPage.tsx
+        LoginPage.tsx
+        SessionsPage.tsx
+      branches/
+        .gitkeep
+        CatalogPage.tsx
+        SettingsPage.tsx
+        SyncPage.tsx
+        UsersPage.tsx
+      customers/
+        .gitkeep
+        CustomerDetail.tsx
+        CustomerForm.tsx
+        CustomersPage.tsx
+      dashboard/
+        .gitkeep
+        DashboardPage.tsx
+        DashboardWidgets.tsx
+      expenses/
+        ExpensesPage.tsx
+      guarantees/
+        .gitkeep
+      messages/
+        .gitkeep
+        BranchMessages.tsx
+        NotificationsPage.tsx
+        notificationTime.ts
+      packages/
+        .gitkeep
+      payments/
+        .gitkeep
+      products/
+        .gitkeep
+      public/
+        HomePage.tsx
+        public.css
+      reports/
+        .gitkeep
+        AuditPage.tsx
+        CompanyReport.tsx
+        PrintPage.tsx
+        ReportsPage.tsx
+      transactions/
+        .gitkeep
+        TransactionDetail.tsx
+        TransactionForm.tsx
+        TransactionsPage.tsx
+        TransactionTable.tsx
+    hooks/
+      .gitkeep
+    i18n/
+      locales/
+        en/
+          translation.json
+        fa-AF/
+          translation.json
+        ps-AF/
+          translation.json
+      advertisements.ts
+      alterations.ts
+      auth.ts
+      business.ts
+      clothing.ts
+      common.ts
+      enterprise.ts
+      errors.ts
+      expenses.ts
+      index.ts
+      premium.ts
+      printing.ts
+      publicSite.ts
+    lib/
+      .gitkeep
+      branchLabel.ts
+      env.ts
+      queryClient.ts
+    offline/
+      .gitkeep
+      database.ts
+      operations.ts
+      vault.ts
+    router/
+      .gitkeep
+    security/
+      offlineLease.ts
+    services/
+      .gitkeep
+      api.ts
+    stores/
+      .gitkeep
+      preferences.ts
+    styles/
+      .gitkeep
+      auth.css
+      enterprise.css
+      index.css
+      premium.css
+      print.css
+    types/
+      .gitkeep
+      business.ts
+    utils/
+      .gitkeep
+      dates.ts
+    main.tsx
+  tests/
+    dates.test.ts
+    notifications.test.ts
+    offlineLease.test.ts
+    offlineOperations.test.ts
+  .env.example
+  index.html
+  package.json
+  tsconfig.json
+  vite.config.ts
+Launcher/
+  scripts/
+    config.mjs
+    system.ps1
+  README.md
+  START_SYSTEM.bat
+  STOP_SYSTEM.bat
+scripts/
+  database/
+    .gitkeep
+    migrate-advertisements.mjs
+    migrate-alterations.mjs
+    migrate-clothing.mjs
+    migrate-currency.mjs
+    migrate-expenses.mjs
+    migrate-operations.mjs
+    seed-demo.mjs
+    setup-accounts.mjs
+  development/
+    .gitkeep
+    local-mongo.mjs
+  install/
+    .gitkeep
+  maintenance/
+    .gitkeep
+    browser-tests.mjs
+    document-inventory.mjs
+    smoke-frontend.mjs
+    test-launcher.ps1
+    verify-build.mjs
+    verify-foundation.mjs
+shared/
+  constants/
+    branches.ts
+    permissions.ts
+  schemas/
+    .gitkeep
+    alterations.ts
+    business.ts
+  types/
+    .gitkeep
+  utils/
+    .gitkeep
+    money.ts
+  index.ts
+  package.json
+  tsconfig.json
+.editorconfig
+.env.example
+.gitignore
+.npmrc
+.prettierignore
+.prettierrc.json
+AGENT_INSTRUCTIONS.md
+AGENTS.md
+eslint.config.mjs
+package-lock.json
+package.json
+playwright.auth.config.ts
+playwright.config.ts
+Project_info
+README.md
+SYSTEM_MASTER.md
+tsconfig.base.json
+vitest.config.ts
+خیلی خوب میخواهم که داشبورد ادمین زمانی که باز میشود به این شکل باشد.docx
+```
+
+Frontend public/icons and images hold static assets; src/assets holds imported assets. app owns the operational shell and routes. components owns common controls, forms and printing. features contains implemented catalog, branch settings/users/sync, dashboard, customers, transactions, messages and reports pages; some originally reserved folders remain empty. services and offline implement API access, scoped encrypted caching and replay. i18n owns translations. tests and e2e contain automated checks.
+
+Backend config validates settings; database defines registered business models and bootstrap; modules implements catalog, transactions, payments, invoices, reports and sync services. security resolves verified identity and branch permissions. services owns commands and queries; jobs reconciles notifications; routes exposes APIs; app.ts composes HTTP; server.ts manages startup/shutdown. Remaining empty folders are reservations, not implemented features.
+
+Shared constants defines branches/permissions; schemas defines runtime contracts; utils implements integer money arithmetic. docs records architecture and actual verification. Launcher contains Windows development lifecycle. scripts/development manages the isolated local replica set; scripts/maintenance verifies and documents the project. .local, dependencies, compiled output, runtime logs and secret environments are intentionally excluded. Root configs centralize workspaces and quality checks; .github/workflows contains CI. AGENTS.md directs agents to repository instructions.

@@ -1,0 +1,41 @@
+{
+  "name": "@myt/frontend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5173 --strictPort",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview --host 127.0.0.1"
+  },
+  "dependencies": {
+    "@myt/shared": "0.1.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-router": "^7.9.5",
+    "zustand": "^5.0.8",
+    "@tanstack/react-query": "^5.90.6",
+    "react-hook-form": "^7.65.0",
+    "@hookform/resolvers": "^5.2.2",
+    "zod": "^4.1.12",
+    "i18next": "^25.6.0",
+    "react-i18next": "^16.2.0",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^0.548.0",
+    "recharts": "^3.3.0",
+    "dexie": "^4.2.1",
+    "jalaali-js": "^1.2.8"
+  },
+  "devDependencies": {
+    "vite": "^7.2.2",
+    "@vitejs/plugin-react": "^5.1.0",
+    "tailwindcss": "^4.1.17",
+    "@tailwindcss/vite": "^4.1.17",
+    "vite-plugin-pwa": "^2.0.0",
+    "workbox-window": "^7.4.1",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@types/jalaali-js": "^1.2.0"
+  }
+}

@@ -1,0 +1,789 @@
+.public-site {
+  background: #faf8f3;
+  color: #223e35;
+  min-height: 100vh;
+  font-family: inherit;
+  line-height: 1.9;
+}
+.public-site a {
+  text-decoration: none;
+  color: inherit;
+}
+.public-header {
+  max-width: 1280px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 25px 40px;
+  border-bottom: 1px solid #d9dfd5;
+}
+.public-brand {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  font-weight: 700;
+}
+.public-brand small {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+}
+.public-logo {
+  display: grid;
+  place-items: center;
+  border: 1px solid #b49b67;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  font-family: Georgia, serif;
+  color: #8d743d;
+  font-size: 17px;
+}
+.public-header nav {
+  display: flex;
+  gap: 23px;
+  font-size: 14px;
+}
+.public-site .public-login {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  background: #24493c;
+  color: #fff;
+  padding: 11px 23px;
+  border-radius: 6px;
+  font-size: 14px;
+}
+.public-hero {
+  max-width: 1200px;
+  padding: 70px 40px 80px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 70px;
+  align-items: center;
+}
+.public-kicker {
+  font-size: 13px;
+  color: #876b35;
+  letter-spacing: 0.03em;
+}
+.public-hero h1 {
+  font-size: clamp(30px, 3.8vw, 53px);
+  line-height: 1.8;
+  font-weight: 500;
+  margin: 18px 0;
+}
+.public-hero h1 em {
+  font-style: normal;
+  color: #8a703f;
+}
+.public-hero-copy > p:not(.public-kicker) {
+  color: #64736b;
+}
+.public-actions {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-top: 32px;
+}
+.public-art {
+  background: #e7eadd;
+  min-height: 430px;
+  border-radius: 200px 200px 12px 12px;
+  padding: 28px;
+  position: relative;
+  background-image: repeating-linear-gradient(
+    130deg,
+    transparent,
+    transparent 24px,
+    #ffffff30 25px,
+    #ffffff30 26px
+  );
+}
+.public-arch {
+  border: 1px solid #a69c74;
+  border-radius: 190px 190px 0 0;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #8a7447;
+  gap: 12px;
+}
+.public-arch > span {
+  font:
+    55px Georgia,
+    serif;
+  letter-spacing: 0.17em;
+}
+.public-art-caption {
+  display: block;
+  text-align: center;
+  font-size: 12px;
+  margin-top: 15px;
+}
+.public-section {
+  max-width: 1200px;
+  margin: auto;
+  padding: 55px 40px;
+  scroll-margin-top: 20px;
+}
+.public-section h2 {
+  font-size: 30px;
+  font-weight: 500;
+  margin: 8px 0 28px;
+}
+.public-about {
+  border-top: 1px solid #d9dfd5;
+  border-bottom: 1px solid #d9dfd5;
+}
+.public-about > p:last-child {
+  max-width: 760px;
+  color: #64736b;
+}
+.public-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+.public-grid article {
+  padding: 30px;
+  background: white;
+  border: 1px solid #e5e6dd;
+  border-radius: 10px;
+  position: relative;
+}
+.public-grid h3 {
+  font-size: 21px;
+  font-weight: 500;
+}
+.public-grid p {
+  font-size: 14px;
+  color: #64736b;
+}
+.public-grid a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+.public-branch-number {
+  position: absolute;
+  left: 25px;
+  top: 22px;
+  font:
+    38px Georgia,
+    serif;
+  color: #d2d6c5;
+}
+.public-contact {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  background: #e9ede4;
+  border-radius: 12px;
+  margin-top: 30px;
+}
+.public-contact p {
+  color: #64736b;
+}
+.public-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 35px 40px;
+  max-width: 1200px;
+  margin: auto;
+  font-size: 12px;
+}
+.public-site a:focus-visible {
+  outline: 3px solid #b49b67;
+  outline-offset: 4px;
+}
+@media (max-width: 800px) {
+  .public-header {
+    padding: 20px;
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+  .public-header nav {
+    order: 3;
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 13px;
+  }
+  .public-hero {
+    grid-template-columns: 1fr;
+    gap: 35px;
+    padding: 35px 24px;
+  }
+  .public-art {
+    max-width: 400px;
+    width: 100%;
+    justify-self: center;
+    min-height: 350px;
+  }
+  .public-arch {
+    height: 290px;
+  }
+  .public-section {
+    padding: 36px 24px;
+  }
+  .public-grid {
+    grid-template-columns: 1fr;
+  }
+  .public-contact {
+    grid-template-columns: 1fr;
+    margin: 20px;
+    gap: 25px;
+  }
+  .public-section h2 {
+    font-size: 25px;
+  }
+  .public-footer {
+    padding: 28px 24px;
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 380px) {
+  .public-brand {
+    font-size: 12px;
+  }
+  .public-site .public-login {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  .public-logo {
+    width: 36px;
+    height: 36px;
+  }
+  .public-header {
+    gap: 12px;
+  }
+}
+
+/* Emerald editorial storefront, with the same local screen tokens as the app. */
+@media screen {
+  .public-site {
+    background: var(--canvas);
+    color: var(--text);
+    overflow-x: clip;
+  }
+  .public-header {
+    max-width: none;
+    padding: 18px max(24px, calc((100vw - 1320px) / 2));
+    background: linear-gradient(110deg, #082f27, #124f40);
+    color: #fff;
+    border-bottom: 1px solid #d0ad6245;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    gap: 24px;
+    box-shadow: 0 4px 20px #113f3012;
+  }
+  .public-header .public-brand {
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .public-brand small {
+    color: #d3e4da;
+    font-size: 11px;
+  }
+  .public-logo {
+    color: #f0d18d;
+    border: 1px solid #d8b96d;
+    width: 58px;
+    height: 58px;
+    font:
+      italic 750 22px Georgia,
+      serif;
+  }
+  .public-header nav {
+    font-size: 14px;
+    gap: 22px;
+  }
+  .public-header nav a {
+    position: relative;
+    padding-block: 8px;
+    color: #e3eee8;
+  }
+  .public-header nav a:hover {
+    color: #f0d18d;
+  }
+  .public-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .public-header-actions select {
+    background: #ffffff0b;
+    border: 1px solid #ffffff45;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 12px;
+    padding: 9px 10px;
+  }
+  .public-header-actions select option {
+    color: #173a2d;
+  }
+  .public-header .appearance-controls .button {
+    color: #fff;
+    border: 1px solid #ffffff45;
+    background: #ffffff0b;
+    border-radius: 50%;
+  }
+  .public-site .public-login {
+    background: linear-gradient(110deg, #174b3b, #21644e);
+    color: #fff;
+    padding: 12px 23px;
+    border-radius: 12px;
+    min-height: 46px;
+    transition:
+      box-shadow 0.2s,
+      background 0.2s;
+    font-size: 14px;
+    font-weight: 650;
+  }
+  .public-site .public-login:hover {
+    box-shadow: 0 6px 20px #183d3025;
+    background: #103e30;
+  }
+  .public-header .public-login {
+    background: linear-gradient(110deg, #c7a153, #f0d693);
+    color: #173a2d;
+    white-space: nowrap;
+  }
+  .public-hero {
+    max-width: 1320px;
+    padding: 52px 32px 60px;
+    grid-template-columns: 1.08fr 1fr;
+    gap: 64px;
+    min-height: 640px;
+  }
+  .public-hero-copy {
+    animation: public-arrive 0.6s ease-out both;
+  }
+  .public-hero .public-kicker {
+    display: inline-flex;
+    padding: 5px 14px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 30px;
+    color: var(--accent);
+    font-size: 13px;
+  }
+  .public-hero h1 {
+    font-size: clamp(32px, 3.9vw, 54px);
+    font-weight: 800;
+    line-height: 1.7;
+    margin-block: 20px;
+    letter-spacing: -0.5px;
+  }
+  .public-hero h1 em {
+    color: #9b742c;
+  }
+  :root[data-theme='dark'] .public-hero h1 em {
+    color: #e2bf74;
+  }
+  .public-hero .public-hero-copy > p:not(.public-kicker) {
+    font-size: 16px;
+    line-height: 2.2;
+    color: var(--muted);
+    max-width: 510px;
+  }
+  .public-actions {
+    gap: 24px;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+  .public-showcase {
+    position: relative;
+    padding-bottom: 22px;
+    animation: public-arrive 0.7s ease-out both;
+  }
+  .public-showcase .bridal-gallery {
+    border-radius: 120px 24px 24px 24px;
+    height: 510px;
+    border: 1px solid #c8a45c65;
+  }
+  .public-showcase-seal {
+    position: absolute;
+    inset-inline: 32px;
+    bottom: 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 13px 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink);
+    font-size: 13px;
+    box-shadow: var(--shadow-card);
+  }
+  .public-showcase-seal svg {
+    color: #aa8033;
+    flex-shrink: 0;
+  }
+  .public-section {
+    max-width: 1280px;
+    padding: 48px 32px;
+    scroll-margin-top: 115px;
+  }
+  .public-section .public-kicker {
+    color: var(--accent);
+    font-size: 13px;
+    font-weight: 650;
+  }
+  .public-section h2 {
+    font-size: clamp(25px, 2.5vw, 34px);
+    font-weight: 750;
+    color: var(--ink);
+    margin-bottom: 24px;
+  }
+  .public-about {
+    text-align: center;
+    border-color: var(--border);
+    background: var(--surface);
+    border-radius: 22px;
+    padding: 38px 45px;
+  }
+  .public-site .public-about > p:last-child {
+    color: var(--muted);
+    margin-inline: auto;
+    max-width: 850px;
+    font-size: 15px;
+    line-height: 2.2;
+  }
+  .public-grid {
+    gap: 18px;
+  }
+  .public-site .public-grid article {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 27px;
+    box-shadow: var(--shadow-card);
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+  .public-grid article:hover {
+    border-color: #bda15b;
+    box-shadow: 0 12px 35px #163e3012;
+  }
+  .public-grid article > svg {
+    box-sizing: content-box;
+    background: var(--surface-subtle);
+    padding: 13px;
+    border-radius: 15px;
+    color: var(--accent);
+  }
+  .public-grid h3 {
+    color: var(--ink);
+    font-weight: 750;
+    font-size: 20px;
+    margin-block: 20px 10px;
+  }
+  .public-site .public-grid p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 2;
+  }
+  .public-grid a {
+    color: var(--accent);
+    font-weight: 650;
+    font-size: 13px;
+  }
+  #branches .public-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .public-branch-number {
+    color: var(--muted);
+    opacity: 0.45;
+    font-size: 30px;
+  }
+  .public-contact {
+    background: linear-gradient(125deg, #0d392e, #185541);
+    color: #fff;
+    border: 1px solid #d4b57060;
+    border-radius: 24px;
+    padding: 38px;
+    margin: 24px auto;
+    gap: 40px;
+  }
+  .public-contact h2,
+  .public-contact h3 {
+    color: #fff;
+  }
+  .public-contact .public-kicker {
+    color: #e4c57e;
+  }
+  .public-site .public-contact p {
+    color: #d6e7dd;
+    font-size: 14px;
+  }
+  .public-contact .public-login {
+    background: #f0d18d;
+    color: #153b2e;
+  }
+  .public-footer {
+    color: var(--muted);
+    font-size: 13px;
+    padding: 28px 32px;
+  }
+  @keyframes public-arrive {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @media (max-width: 1100px) {
+    .public-header {
+      gap: 16px;
+      padding-inline: 22px;
+      flex-wrap: wrap;
+    }
+    .public-header nav {
+      order: 3;
+      width: 100%;
+      justify-content: center;
+      gap: 32px;
+    }
+    .public-hero {
+      gap: 32px;
+      padding-inline: 26px;
+    }
+    .public-hero h1 {
+      font-size: 37px;
+    }
+    #branches .public-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .public-about,
+    .public-contact {
+      margin-inline: 24px;
+    }
+  }
+  @media (max-width: 800px) {
+    .public-header {
+      padding: 14px 18px;
+      gap: 14px;
+    }
+    .public-header .public-brand {
+      font-size: 13px;
+    }
+    .public-logo {
+      width: 44px;
+      height: 44px;
+      font-size: 18px;
+    }
+    .public-header-actions {
+      gap: 8px;
+    }
+    .public-header .public-login {
+      font-size: 12px;
+      padding: 9px 12px;
+      min-height: 40px;
+    }
+    .public-header nav {
+      gap: 12px;
+      font-size: 12px;
+      justify-content: space-between;
+    }
+    .public-hero {
+      grid-template-columns: 1fr;
+      gap: 28px;
+      padding: 32px 20px 38px;
+    }
+    .public-hero h1 {
+      font-size: 36px;
+    }
+    .public-hero .public-hero-copy > p:not(.public-kicker) {
+      font-size: 15px;
+    }
+    .public-showcase {
+      max-width: 560px;
+      width: 100%;
+      justify-self: center;
+    }
+    .public-showcase .bridal-gallery {
+      height: 460px;
+      border-start-start-radius: 75px;
+    }
+    .public-about {
+      padding: 28px 24px;
+      margin-inline: 18px;
+    }
+    .public-section {
+      padding: 34px 20px;
+      scroll-margin-top: 160px;
+    }
+    .public-grid {
+      grid-template-columns: 1fr;
+    }
+    .public-contact {
+      padding: 28px 24px;
+      margin-inline: 18px;
+      gap: 22px;
+    }
+    .public-footer {
+      padding-inline: 20px;
+    }
+  }
+  @media (max-width: 430px) {
+    .public-header .public-brand {
+      font-size: 12px;
+      gap: 8px;
+    }
+    .public-header .public-brand small {
+      font-size: 10px;
+    }
+    .public-header .public-login svg {
+      display: none;
+    }
+    .public-header .public-login {
+      padding-inline: 10px;
+      font-size: 11px;
+    }
+    .public-header-actions .button {
+      min-width: 36px;
+      min-height: 36px;
+      width: 36px;
+      padding: 7px;
+    }
+    .public-logo {
+      width: 37px;
+      height: 37px;
+    }
+    .public-hero h1 {
+      font-size: 30px;
+    }
+    #branches .public-grid {
+      grid-template-columns: 1fr;
+    }
+    .public-showcase .bridal-gallery {
+      height: 420px;
+    }
+    .public-showcase-seal {
+      inset-inline: 16px;
+      font-size: 12px;
+      padding-inline: 10px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .public-hero-copy,
+    .public-showcase {
+      animation: none;
+    }
+    .public-grid article,
+    .public-site .public-login {
+      transition: none;
+    }
+  }
+}
+@media screen {
+  .public-header .button.ghost {
+    color: #fff1cb;
+    background: #ffffff0c;
+    border: 1px solid #ffffff40;
+    border-radius: 50%;
+  }
+  .public-header .button.ghost:hover {
+    background: #ffffff20;
+  }
+}
+
+@media screen {
+  /* Gold actions must keep their contrast against the emerald header on hover. */
+  .public-site .public-header .public-login:is(:hover, :focus-visible, :active),
+  .public-site
+    .public-contact
+    .public-login:is(:hover, :focus-visible, :active) {
+    background: linear-gradient(110deg, #dfbb6b, #f8e3ac);
+    color: #153b2e;
+    box-shadow: 0 5px 18px #00000020;
+  }
+}
+
+@media screen {
+  .public-ads-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 18px;
+  }
+  .public-site .ad-banner {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+  .public-site .ad-banner:hover {
+    border-color: #bda15b;
+    box-shadow: 0 12px 35px #163e3012;
+  }
+  .ad-banner-media {
+    aspect-ratio: 16 / 9;
+    display: grid;
+    place-items: center;
+    background: var(--surface-subtle);
+    overflow: hidden;
+  }
+  .ad-banner-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .ad-banner-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 22px 24px;
+  }
+  .ad-banner-body h3 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 750;
+    color: var(--ink);
+  }
+  .public-site .ad-banner-body p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 2;
+    color: var(--muted);
+  }
+  .ad-banner-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: fit-content;
+    margin-top: 4px;
+    font-size: 13px;
+    font-weight: 650;
+    color: var(--accent);
+  }
+  .ad-banner-link:hover {
+    color: #9b742c;
+  }
+  :root[data-theme='dark'] .ad-banner-link:hover {
+    color: #e2bf74;
+  }
+}

@@ -1,0 +1,458 @@
+.print-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  padding: 20px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+.print-controls h1 {
+  font-size: 22px;
+  margin: 0 0 8px;
+}
+.print-sheets {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  background: #deded8;
+  min-height: 100vh;
+  padding: 30px;
+}
+.invoice-paper {
+  box-sizing: border-box;
+  background: white;
+  color: #111;
+  border: 1px solid #aaa;
+  position: relative;
+  font:
+    11px/1.45 Tahoma,
+    'Segoe UI',
+    sans-serif;
+  overflow-wrap: anywhere;
+  flex-shrink: 0;
+}
+.invoice-paper.portrait {
+  width: 148mm;
+  height: 210mm;
+  padding: 8mm;
+}
+.invoice-paper.landscape {
+  width: 210mm;
+  height: 148mm;
+  padding: 8mm;
+}
+.bill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  border-bottom: 1px solid #222;
+  padding: 0 0 6px;
+  margin-bottom: 6px;
+}
+.bill-header h2 {
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+}
+.bill-header p {
+  margin: 2px 0;
+}
+.bill-code {
+  font-size: 8px;
+  direction: ltr;
+  max-width: 56mm;
+  overflow-wrap: anywhere;
+}
+.bill-content {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.bill-block {
+  display: flow-root;
+  break-inside: avoid;
+  margin: 0;
+}
+.bill-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 14px;
+}
+.bill-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  border-bottom: 1px dotted #ddd;
+  padding: 2px 0;
+  min-width: 0;
+}
+.bill-line strong {
+  font-weight: 500;
+  text-align: end;
+  max-width: 68%;
+  overflow-wrap: anywhere;
+}
+.bill-line > span {
+  color: #444;
+}
+.bill-totals {
+  border-top: 1px solid #777;
+  padding-top: 4px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px 15px;
+}
+.bill-totals .bill-line:last-child {
+  font-weight: 700;
+  background: #f1f1eb;
+  padding: 4px;
+}
+.bill-footer {
+  position: absolute;
+  inset-inline: 5mm;
+  bottom: 3mm;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #aaa;
+  padding-top: 3px;
+  font-size: 8px;
+}
+.bill-notes p {
+  white-space: pre-wrap;
+  margin: 2px 0;
+}
+.bill-provisional {
+  display: block;
+  color: #a42922;
+  font-size: 12px;
+  padding: 5px;
+  border: 1px solid #a42922;
+}
+.print-measure {
+  position: fixed !important;
+  left: -100000px !important;
+  top: 0 !important;
+  height: auto !important;
+  visibility: hidden !important;
+  display: block !important;
+}
+.print-measure .bill-block {
+  margin-bottom: 6px;
+}
+.a4-page {
+  position: relative;
+  box-sizing: border-box;
+  width: 210mm;
+  height: 297mm;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  padding-top: 0.5mm;
+}
+.print-view {
+  position: relative;
+}
+.report-print-only {
+  display: none;
+}
+.list-print-portal .modal {
+  width: min(1200px, 100%);
+}
+.list-print-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.list-print-controls p {
+  max-width: 700px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.list-print-document header {
+  text-align: center;
+  padding: 14px 10px 22px;
+}
+.list-print-document header h1 {
+  font-size: 22px;
+}
+.list-print-document header h2 {
+  margin-top: 7px;
+}
+.list-print-document header p {
+  margin-top: 7px;
+  font-size: 12px;
+}
+.invoice-print-action .empty.error {
+  min-height: 0;
+  padding: 8px;
+  white-space: normal;
+  max-width: 240px;
+}
+@media print {
+  .print-exclude {
+    display: none !important;
+  }
+  body:has(.list-print-portal) #root {
+    display: none !important;
+  }
+  .list-print-portal .modal-backdrop {
+    position: static;
+    display: block;
+    padding: 0;
+    background: white;
+    backdrop-filter: none;
+    overflow: visible;
+  }
+  .list-print-portal .modal {
+    width: 100%;
+    max-height: none;
+    overflow: visible;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  .list-print-portal .modal-heading,
+  .list-print-controls {
+    display: none !important;
+  }
+  .list-print-document .panel {
+    border: 0;
+    margin: 0;
+    overflow: visible;
+  }
+  .list-print-document .table-scroll {
+    overflow: visible;
+    width: 100%;
+  }
+  .list-print-document table {
+    width: 100%;
+    font-size: 9px;
+    table-layout: auto;
+  }
+  .list-print-document th,
+  .list-print-document td {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    padding: 5px;
+    font-size: 9px;
+  }
+  .list-print-document .code {
+    max-width: none;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    font-size: 8px;
+  }
+  .list-print-document thead {
+    display: table-header-group;
+  }
+  .list-print-document tr {
+    break-inside: avoid;
+  }
+  html,
+  body,
+  #root {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: white !important;
+  }
+  .app-sidebar,
+  .top-menubar,
+  .app-topbar,
+  .breadcrumb,
+  .environment-banner,
+  .network-banner,
+  .toast,
+  .print-controls,
+  .print-measure {
+    display: none !important;
+  }
+  .app-frame,
+  .app-main,
+  .workspace {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+  }
+  .print-sheets {
+    display: block;
+    background: white;
+    padding: 0;
+    min-height: 0;
+  }
+  .invoice-paper {
+    border: 0.2mm solid #777;
+    box-shadow: none;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .one-up > .invoice-paper {
+    break-after: page;
+    page-break-after: always;
+  }
+  .a4-page {
+    break-after: page;
+    page-break-after: always;
+    break-inside: avoid;
+  }
+  .a4-page:last-child,
+  .one-up > .invoice-paper:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+  .app-content:has(.report-print-only) {
+    display: block;
+  }
+  .report-screen-only {
+    display: none !important;
+  }
+  .report-print-only {
+    display: block !important;
+  }
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .company-report {
+    display: block;
+  }
+  .company-report .panel {
+    border: 0;
+    box-shadow: none;
+    margin: 0 0 6mm;
+    padding: 0;
+    overflow: visible;
+  }
+  .company-report .table-scroll {
+    overflow: visible;
+    width: 100%;
+  }
+  .company-report-table {
+    min-width: 0;
+    font-size: 9px;
+  }
+  .company-report-table th,
+  .company-report-table td {
+    border: 0.2mm solid #555;
+    padding: 3px 4px;
+    white-space: nowrap;
+    font-size: 9px;
+  }
+  .company-report-currency {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .company-report-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+  }
+}
+
+.a4-page::after {
+  content: '';
+  position: absolute;
+  top: 148.5mm;
+  left: 5mm;
+  right: 5mm;
+  border-top: 0.2mm dashed #999;
+  pointer-events: none;
+}
+.customer-account-row {
+  cursor: pointer;
+}
+.customer-account-row:focus-visible {
+  outline: 2px solid var(--accent, #14806c);
+  outline-offset: -2px;
+}
+.nav-group summary {
+  cursor: pointer;
+  padding: 12px;
+  font-weight: 600;
+}
+.nav-group[open] summary {
+  color: var(--accent, #14806c);
+}
+
+.alteration-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.alteration-details > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.alteration-details dt {
+  font-weight: 700;
+  color: var(--muted);
+}
+.alteration-details dd {
+  margin: 0.3rem 0 0;
+  white-space: pre-wrap;
+}
+.alteration-stats {
+  margin-block: 1rem;
+}
+.alteration-overdue {
+  background: #fcecec;
+  color: #b73535;
+}
+.customer-tabs {
+  margin-block-end: 1rem;
+}
+.customer-tabs [aria-selected='true'] {
+  box-shadow: inset 0 -3px 0 var(--gold);
+}
+@media (max-width: 600px) {
+  .alteration-details {
+    grid-template-columns: 1fr;
+  }
+}
+@media print {
+  body:has(.alteration-receipt) .app-sidebar,
+  body:has(.alteration-receipt) .app-topbar,
+  body:has(.alteration-receipt) .top-menubar,
+  body:has(.alteration-receipt) .breadcrumb {
+    display: none !important;
+  }
+  body:has(.alteration-receipt) .app-frame,
+  body:has(.alteration-receipt) .app-main,
+  body:has(.alteration-receipt) .app-content {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .alteration-receipt {
+    background: white !important;
+    color: #111 !important;
+    border: 0;
+    box-shadow: none;
+    font-size: 11pt;
+  }
+  .alteration-receipt header {
+    border-bottom: 1px solid #222;
+    padding-bottom: 1rem;
+  }
+  .alteration-receipt .alteration-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.7rem;
+  }
+  .alteration-receipt .alteration-details > div {
+    break-inside: avoid;
+  }
+}

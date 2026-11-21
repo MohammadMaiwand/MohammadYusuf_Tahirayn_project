@@ -1,0 +1,50 @@
+# Garment alterations - Phase 2
+
+Implemented in the existing React/Express/Mongoose architecture on 2026-11-20; final executed acceptance is tracked in PROJECT_STATUS.md. All four active branches are supported; Sham Shaban remains denied. No dependency or lockfile change.
+
+## Workflows and accounting
+
+The independent /alterations navigation item follows Products in the existing inventory group. Customer accounts keep their existing default transaction view and add Customer Information / Transactions / Garment Alterations controls. Transactions embed a customer/transaction-scoped alteration section. Both entry points use one form, table, detail and receipt implementation; no duplicate customers or stock items are created. The dashboard summary belongs to the standalone module only: the customer account and transaction tabs reuse the records list, filters and form without duplicating the module summary, so the transaction/customer detail pages keep their own single summary block.
+
+Every job has a manually entered garment ID, unique case-normalized within its branch's alteration ledger. The internal immutable UUID/code remain implementation references, never replacements for the required manual ID. Fields include existing customer association and snapshots, optional authorized customer transaction, garment metadata, optional optimized photo, alteration type/custom description, tailor name and optional active same-branch employee ID, start/delivery instants, Kabul calendar duration, independent original price/currency and service charge/currency, and notes. Same-day duration is zero; delivery on an earlier Kabul calendar day is rejected. Original amount/currency and customer identity are immutable after creation. Linked transactions require the exact original catalog snapshot price/currency and are never financially rewritten. Selecting a transaction prepopulates the garment metadata and original price.
+
+Alteration charges are a separate service ledger, not a purchase-price replacement or an invented cash receipt. Reports expose alterationChargesMinor by the selected currency, authorized scope and start-date range, separately from transaction totals, payment collections and expenses. Noncancelled jobs are included; cancellation removes them from booked charges. No exchange conversion, automatic transaction payment or unsupported refund posting is performed. A printed alteration receipt explicitly does not confirm payment. The owner may later request an explicit service-payment/allocation workflow; it is not fabricated here.
+
+## Authorization and data
+
+New permissions: alterations.read (own records), alterations.read.all (branch records), alterations.create, alterations.update, alterations.status, alterations.financial, alterations.print. Admin and manager defaults include all; employee defaults include routine own-record operations but not read.all. Explicit denies still win. New operations call active branch context, current account grants, device/idempotency/version safeguards and service-level branch/owner predicates. Read and receipt APIs redact prices without financial permission. Creation/price editing require financial permission; status operations do not. Idempotent replay rechecks current record scope and financial redaction. Customer/transaction/tailor/photo associations must belong to the same permitted branch; transaction ownership is independently checked.
+
+New Alteration model/collection contains the job and immutable customer/original-price snapshots. Compound indexes enforce branch/manual garment ID uniqueness and support branch/customer, status/deadline and creator reads. No existing index is dropped. Notification gains optional alterationId, garmentId, managementOnly and deliveryStatus fields plus the alteration type; existing notifications remain valid. The existing branch/eventId unique index deduplicates reminders, so no new notification index is necessary. The existing ClothingPhoto blob collection gains a purpose discriminator; existing blobs default to catalog. The same bounded JPEG/PNG/WebP processor (5 MiB input, pixel bound, EXIF rotation, metadata-stripped optimized WebP) is reused. Alteration photos require own/branch alteration access; unlinked upload preview is limited to its creator. Replace/remove changes the job's reference; immutable old blobs are not destructively removed.
+
+The new module uses no-store requests and short-lived in-memory query state; alteration records and images are not added to IndexedDB/outbox. Mutations are deliberately online-only and server replay denies offline alteration commands. Existing offline business workflows are preserved.
+
+## API contracts
+
+All endpoints below are under /api/v1/branches/:branchId and require active membership:
+
+- GET /alterations: bounded page/limit, q, customerId, transactionId, garmentId, tailor, status, currency, startFrom/startTo and deliveryFrom/deliveryTo; returns paged authorized rows plus counts for total/pending/in_progress/ready/dueTomorrow/overdue/delivered. Date ranges use inclusive from/exclusive to instants.
+- GET /alterations/tailors: active same-branch employee IDs and names only; external tailor names may be entered manually.
+- GET /alterations/:id: authorized current details/company print branding.
+- GET /alterations/:id/receipt: same scope plus alteration print permission.
+- Existing POST /commands: alteration.create and alteration.update use shared strict alterationInput; updates require targetId/expectedVersion. alteration.status uses targetId and strict {status,expectedVersion}. All use operationId/deviceId and existing transactional audit/idempotency behavior. Fields are never raw Mongo filters.
+- Existing POST /clothing-photos?purpose=alteration reuses secure image processing with alteration create/update permission, GET /clothing-photos/:id enforces purpose-specific authorization.
+
+Receipts use the same detail data and company branding with an isolated A4 portrait print surface, hidden navigation/actions, embedded image when available, localized dates and currency codes. Long content breaks naturally between fields. Existing A4/A5 transaction invoices remain unchanged.
+
+## Reminder scheduling
+
+The existing server coordinator runs immediately on startup and every 60 seconds without requiring any logged-in user. Transaction and alteration reconciliation run independently using Promise.allSettled, with overlap prevention and sanitized retry logging. Failed runs retry on the next interval. Alteration candidates are streamed through the branch/deadline index; each reminder/status write uses a MongoDB transaction and alteration document write to serialize against edits.
+
+Kabul day boundaries determine due tomorrow and overdue. One day before expected delivery, pending/in-progress work generates an in-app notification containing customer, manual garment ID, date and branch. Ready work is treated as completed alteration work for reminder suppression; delivered/cancelled work never receives new reminders. Any undelivered/noncancelled record becomes overdue on the first Kabul day after the delivery day, with audit and version change. Effective list/detail status also reflects a passed deadline between scheduled runs.
+
+Durable eventId is alteration:<id>:tomorrow:<Kabul day>. Existing unique branch/eventId index, transactional writes and setOnInsert prevent duplicates across timer retries, restarts and concurrent workers. Stored deliveryStatus is available/resolved; per-account readBy independently tracks unread badges. Rescheduling immediately resolves a prior-deadline reminder, and the new deadline produces one new reminder on its prior day. Ready/delivered/cancelled transitions immediately resolve outstanding reminders; reconciliation also repairs stale reminders and expires tomorrow notifications after their due day. There is no manual reminder button or external SMS/WhatsApp send.
+
+The existing notification center, manager dashboard previews and header badges include these reminders. Only admin/manager accounts with notification and alteration branch-read permissions see management-only reminders. Branch membership predicates and current role checks exclude unrelated branches and employees even if transaction-wide access was delegated. Admin's authorized global inbox spans their active branches. Links await the proper branch switch before opening the exact alteration record. Read acknowledgements remain per user, not per branch.
+
+## Explicit migration and deployment
+
+Build, then run `node scripts/database/migrate-alterations.mjs` with the existing private backend environment. The additive rerunnable migration creates only the new collection/indexes and missing permission metadata and ensures the existing photo collection exists. It does not alter customer records, transaction prices, currency metadata, credentials or invoice snapshots. New collections use autoCreate/autoIndex false; the collection is intentionally absent from startup allModels and sync pull allowlists. Apply migration before starting the rebuilt server. Existing account grants are computed by the same effectivePermissions function, retaining explicit deny/delegation rules.
+
+## Acceptance and limits
+
+Backend tests use guarded disposable databases and controlled scheduler instants; browser tests cover customer and independent entry, transaction association, both currencies, date duration, images, editing/status, receipts, all four branches and RTL/LTR, plus reminder generation/deduplication and cross-branch admin navigation. Executed acceptance: npm run check PASS (57 tests), npm run format:check PASS and full operational+alteration browser PASS 12/12 on two consecutive runs; the additive local migration ran with exit 0. Native-language review, physical printer and production hosting/backup/index migration acceptance remain distinct from automated local evidence. Exact executed results, local migration and restored app readiness: PROJECT_STATUS.md.
